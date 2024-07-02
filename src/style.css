@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(33, 33, 94);
+}
+
+.game-container {
+    display: flex;
+}
+
+.square {
+    width:  75px;
+    height: 75px;
+    border: 1px solid black;
+    background-color: lightblue;
+}
+
+.ship {
+    background-color: red;
+}
+
+.shiny {
+    background-color: pink;
+}
+
+.root {
+    height: 100%;
+    width: auto;
+    display: flex;
+    gap: 10%;
+    justify-content: center;
+    align-items: center;
+}
