@@ -11,7 +11,6 @@ import _ from 'lodash';
 // computer.renderBoard()
 // player1.board.placeShip("Destroyer", 3, 5)
 // player1.renderBoard()
-createMain()
 const game = new Game("player1", "computer");
 game.startGame()
 
