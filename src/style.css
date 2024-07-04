@@ -33,3 +33,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.hit {
+    background-color: pink;
+}

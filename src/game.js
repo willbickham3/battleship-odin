@@ -61,6 +61,34 @@ export default class Game {
         player.board.receiveAttack(x, y)
     }
 
+    clickEvent = (ev) => {
+        console.log(this.phase)
+        let x = Number(ev.target.getAttribute('x'));
+        let y = Number(ev.target.getAttribute('y'));
+        if (this.phase == "Placement") {
+            if (this.currentPlayer.name == this.player1.name) {
+                this.setShip(this.player1, x, y)
+            }
+            else {
+                this.setShip(this.player2, x, y)}
+        }
+
+        else {
+            console.log("Here #2")
+            let hithip = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+            if (this.currentPlayer.board.receiveAttack(x, y)) {
+                console.log(hithip)
+                hithip.classList.add("hit")
+            }
+            hithip.classList.remove("shiny")
+            console.log(this.currentPlayer.board)
+            // this.currentPlayer.renderBoard()
+            // hithip.classList.add('hit')
+            this.changeTurn()
+            this.addPlacementListeners(this.currentPlayer)
+        }
+    }
+
     addPlacementListeners(player) {
         let ships = this.currentPlayer.board.unplacedShips
 
@@ -102,56 +130,11 @@ export default class Game {
                 }
             })
 
-            square.addEventListener('click', (e) => {
-                let x = Number(e.target.getAttribute('x'));
-                let y = Number(e.target.getAttribute('y'));
-                if (this.phase == "Placement") {
-                    if (this.currentPlayer.name == this.player1.name) {
-                        this.setShip(this.player1, x, y)
-                    }
-                    else {
-                        this.setShip(this.player2, x, y)}
-                }
-
-                else {
-                    this.currentPlayer.board.receiveAttack(x, y)
-                    console.log(this.currentPlayer.board)
-                    // this.currentPlayer.renderBoard()
-                    this.changeTurn()
-                    // this.addPlacementListeners(this.currentPlayer)
-                }
-
-            })
+            square.addEventListener('click', this.clickEvent)
         })
     }
 
 }
 
 
-const mouseover = (e) => {
-    let x = Number(e.target.getAttribute('x'));
-    let y = Number(e.target.getAttribute('y'));
-    if (this.phase == "Placement") {
-        for (let index = 0; index < ships[0].length; index++) {
-            let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
-            colorSquare.classList.remove("shiny")
-        }}
-    else {
-        let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-        colorSquare.classList.remove("shiny")
-    }
-}
-
-const mouseout = (e) => {
-    let x = Number(e.target.getAttribute('x'));
-    let y = Number(e.target.getAttribute('y'));
-    if (this.phase == "Placement") {
-        for (let index = 0; index < ships[0].length; index++) {
-            let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
-            colorSquare.classList.remove("shiny")
-        }}
-    else {
-        let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-        colorSquare.classList.remove("shiny")
-    }
-}
+ 

@@ -1,4 +1,3 @@
-import createMain from "./main.js";
 import Game from "./game.js";
 import './style.css';
 import _ from 'lodash';
