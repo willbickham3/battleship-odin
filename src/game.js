@@ -62,15 +62,17 @@ export default class Game {
     }
 
     clickEvent = (ev) => {
-        console.log(this.phase)
+        // console.log(this.phase)
         let x = Number(ev.target.getAttribute('x'));
         let y = Number(ev.target.getAttribute('y'));
         if (this.phase == "Placement") {
             if (this.currentPlayer.name == this.player1.name) {
                 this.setShip(this.player1, x, y)
+                // console.log(this.player1.board.gameOver())
             }
             else {
                 this.setShip(this.player2, x, y)}
+                // console.log(this.player2.board.gameOver())
         }
 
         else {
@@ -89,6 +91,37 @@ export default class Game {
         }
     }
 
+    mouseOverEvent = (ev) => {
+        let x = Number(ev.target.getAttribute('x'));
+        let y = Number(ev.target.getAttribute('y'));
+        let ships = this.currentPlayer.board.unplacedShips
+
+        if (this.phase == "Placement") {
+            for (let index = 0; index < ships[0].length; index++) {
+                let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
+                colorSquare.classList.add("shiny")
+            }}
+        else {
+            let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+            colorSquare.classList.add("shiny")
+        }
+    }
+
+    mouseOutEvent = (e) => {
+        let x = Number(e.target.getAttribute('x'));
+        let y = Number(e.target.getAttribute('y'));
+        let ships = this.currentPlayer.board.unplacedShips
+        if (this.phase == "Placement") {
+            for (let index = 0; index < ships[0].length; index++) {
+                let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
+                colorSquare.classList.remove("shiny")
+            }}
+        else {
+            let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+            colorSquare.classList.remove("shiny")
+        }
+    }
+
     addPlacementListeners(player) {
         let ships = this.currentPlayer.board.unplacedShips
 
@@ -101,37 +134,22 @@ export default class Game {
         const squares = document.querySelectorAll(`.game-container.${player.name} .square`)
 
         squares.forEach((square) => {
-            square.addEventListener("mouseover", (e) => {
-                let x = Number(e.target.getAttribute('x'));
-                let y = Number(e.target.getAttribute('y'));
+            square.addEventListener("mouseover", this.mouseOverEvent)
 
-                if (this.phase == "Placement") {
-                    for (let index = 0; index < ships[0].length; index++) {
-                        let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
-                        colorSquare.classList.add("shiny")
-                    }}
-                else {
-                    let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-                    colorSquare.classList.add("shiny")
-                }
-            })
-
-            square.addEventListener("mouseout", (e) => {
-                let x = Number(e.target.getAttribute('x'));
-                let y = Number(e.target.getAttribute('y'));
-                if (this.phase == "Placement") {
-                    for (let index = 0; index < ships[0].length; index++) {
-                        let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
-                        colorSquare.classList.remove("shiny")
-                    }}
-                else {
-                    let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-                    colorSquare.classList.remove("shiny")
-                }
-            })
+            square.addEventListener("mouseout", this.mouseOutEvent)
 
             square.addEventListener('click', this.clickEvent)
         })
+    }
+
+    removeEventListeners(player) {
+        const squares = document.querySelectorAll(`.game-container.${player.name} .square`);
+        squares.forEach((square) => {
+            square.removeEventListener("mouseover", this.mouseOverEvent)
+            square.removeEventListener("mouseout", this.mouseOutEvent)
+            square.removeEventListener('click', this.clickEvent)
+        })
+
     }
 
 }
