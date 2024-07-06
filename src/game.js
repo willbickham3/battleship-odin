@@ -86,6 +86,7 @@ export default class Game {
             console.log(this.currentPlayer.board)
             // this.currentPlayer.renderBoard()
             // hithip.classList.add('hit')
+            this.removeEventListeners(this.currentPlayer)
             this.changeTurn()
             this.addPlacementListeners(this.currentPlayer)
         }
@@ -135,9 +136,7 @@ export default class Game {
 
         squares.forEach((square) => {
             square.addEventListener("mouseover", this.mouseOverEvent)
-
             square.addEventListener("mouseout", this.mouseOutEvent)
-
             square.addEventListener('click', this.clickEvent)
         })
     }
