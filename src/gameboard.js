@@ -122,10 +122,11 @@ export default class GameBoard {
         try {
             this.gameBoard[x][y].hit()
             console.log("It's a hit!")
+            return true
         } catch (error) {
             this.missedAttack()
             this.missedShots.push([x, y])
-            return
+            return false
         }
     }
 
