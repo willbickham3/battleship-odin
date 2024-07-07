@@ -48,6 +48,8 @@ export default class Game {
         let y = Math.floor(Math.random() * 10)
         if (this.setShip(this.currentPlayer, x, y)) {
             console.log('success')
+            this.changeTurn()
+            this.addPlacementListeners(this.currentPlayer)
             return 
         }
         else {
@@ -78,9 +80,16 @@ export default class Game {
         else {
             console.log("Here #2")
             let hithip = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+            if (hithip.classList.contains('hit')) {
+                return 
+            }
+            
             if (this.currentPlayer.board.receiveAttack(x, y)) {
                 console.log(hithip)
                 hithip.classList.add("hit")
+            }
+            else {
+                hithip.style.backgroundColor = "white"
             }
             hithip.classList.remove("shiny")
             console.log(this.currentPlayer.board)
