@@ -68,13 +68,7 @@ export default class Game {
         let x = Number(ev.target.getAttribute('x'));
         let y = Number(ev.target.getAttribute('y'));
         if (this.phase == "Placement") {
-            if (this.currentPlayer.name == this.player1.name) {
-                this.setShip(this.player1, x, y)
-                // console.log(this.player1.board.gameOver())
-            }
-            else {
-                this.setShip(this.player2, x, y)}
-                // console.log(this.player2.board.gameOver())
+            this.setShip(this.currentPlayer, x, y)
         }
 
         else {
