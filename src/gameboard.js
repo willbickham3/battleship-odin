@@ -52,7 +52,8 @@ export default class GameBoard {
         const ship = this.unplacedShips.find(obj => obj.name === `${shipName}`);
 
         if (checkIfCoordsAlreadyLogged(this.takenSquares, x, y)) {
-            throw Error("Cannot place a ship there! Try again!")
+            // throw Error("Cannot place a ship there! Try again!")
+            return
 
         }
 
@@ -83,7 +84,8 @@ export default class GameBoard {
                 console.log(this.gameBoard[coordSet[0]][coordSet[1]])
                 if (this.gameBoard[coordSet[0]][coordSet[1]][0] !== null) {
                     console.log(this.gameBoard[coordSet[0]])
-                    throw new Error("Ship already exists.")
+                    // throw new Error("Ship already exists.")
+                    return
                 }
             });
 
@@ -105,16 +107,17 @@ export default class GameBoard {
             console.log(ship)
             this.ships.push(ship)
             this.unplacedShips = this.unplacedShips.filter(ship => ship.name !== shipName)
-            return "Success"
+            return true
             
         } catch (error) {
-            if (ship == undefined) {
-                throw new Error(`"${shipName}" is not a valid ship. Please select a valid ship.`)
-            }
-            else {
-            let fail = "There was an error in placing your ship. Please make sure you have entered valid x/y coordinates."
-            throw new Error(fail)
-            }
+            return
+            // if (ship == undefined) {
+            //     throw new Error(`"${shipName}" is not a valid ship. Please select a valid ship.`)
+            // }
+            // else {
+            // let fail = "There was an error in placing your ship. Please make sure you have entered valid x/y coordinates."
+            // throw new Error(fail)
+            // }
         }
     }
 
