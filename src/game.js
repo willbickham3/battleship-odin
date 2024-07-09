@@ -53,11 +53,12 @@ export default class Game {
     }
 
     computerPlayer() {
+        let computerShips = this.player2.board
         let x = Math.floor(Math.random() * 10)
         let y = Math.floor(Math.random() * 10)
         while (this.player2.board.unplacedShips.length > 0) {
             console.log("event")
-            this.setShip(this.player2, x, y)
+            computerShips.placeShip(computerShips.unplacedShips[0].name, x, y)
             x = Math.floor(Math.random() * 10)
             y = Math.floor(Math.random() * 10)
         }
@@ -135,6 +136,9 @@ export default class Game {
             this.addPlacementListeners(this.currentPlayer)}
             else {
                 this.computerAttack()
+            }
+            if (this.player1.board.gameOver() || this.player2.board.gameOver()) {
+                console.log("OVERERERERER")
             }
         }
     }
