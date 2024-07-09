@@ -79,22 +79,22 @@ export default class Game {
 
         else {
             console.log("Here #2")
-            let hithip = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-            if (hithip.classList.contains('hit')) {
+            let hitship = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+            if (hitship.classList.contains('hit')) {
                 return 
             }
-            
+
             if (this.currentPlayer.board.receiveAttack(x, y)) {
-                console.log(hithip)
-                hithip.classList.add("hit")
+                console.log(hitship)
+                hitship.classList.add("hit")
             }
             else {
-                hithip.style.backgroundColor = "white"
+                hitship.style.backgroundColor = "white"
             }
-            hithip.classList.remove("shiny")
+            hitship.classList.remove("shiny")
             console.log(this.currentPlayer.board)
             // this.currentPlayer.renderBoard()
-            // hithip.classList.add('hit')
+            // hitship.classList.add('hit')
             this.removeEventListeners(this.currentPlayer)
             this.changeTurn()
             this.addPlacementListeners(this.currentPlayer)
