@@ -30,6 +30,10 @@ export default class Game {
         this.player1.renderBoard()
         this.player2.renderBoard()
 
+        if (this.player2.name == 'computer') {
+            this.computerPlayer()
+        }
+
         this.addPlacementListeners(this.player1)
         // this.addPlacementListeners(this.player2)
 }
@@ -39,22 +43,34 @@ export default class Game {
         player.board.placeShip(ships[0].name, x, y)
         // console.log(this.currentPlayer.board, ships)
         this.currentPlayer.renderBoard()
-        this.changeTurn()
+        console.log(this.currentPlayer.board.ships.length)
+        if (this.player2.name !== "computer" || this.currentPlayer.board.ships.length == 5) {
+            console.log('change')
+            this.phase = "Battle"
+            this.changeTurn()}
+
         this.addPlacementListeners(this.currentPlayer)  // currentPlayer is now pointing to the next ship
     }
 
     computerPlayer() {
         let x = Math.floor(Math.random() * 10)
         let y = Math.floor(Math.random() * 10)
-        if (this.setShip(this.currentPlayer, x, y)) {
-            console.log('success')
-            this.changeTurn()
-            this.addPlacementListeners(this.currentPlayer)
-            return 
+        while (this.player2.board.unplacedShips.length > 0) {
+            console.log("event")
+            this.setShip(this.player2, x, y)
+            x = Math.floor(Math.random() * 10)
+            y = Math.floor(Math.random() * 10)
         }
-        else {
-            this.computerPlayer()
-        }
+        console.log(this.player2.board)
+        // if (this.setShip(this.currentPlayer, x, y)) {
+        //     console.log('success')
+        //     this.changeTurn()
+        //     this.addPlacementListeners(this.currentPlayer)
+        //     return 
+        // }
+        // else {
+        //     this.computerPlayer()
+        // }
         
     }
 
