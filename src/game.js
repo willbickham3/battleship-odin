@@ -74,6 +74,30 @@ export default class Game {
         
     }
 
+    computerAttack() {
+        let x = Math.floor(Math.random() * 10)
+        let y = Math.floor(Math.random() * 10)
+        this.player1.board.receiveAttack(x, y)
+        // let hitship = this.player1.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+        //     if (hitship.classList.contains('hit')) {
+        //         return 
+        //     }
+
+        //     if (this.player1.board.receiveAttack(x, y)) {
+        //         console.log(hitship)
+        //         hitship.classList.add("hit")
+        //     }
+        //     else {
+        //         hitship.style.backgroundColor = "white"
+        //     }
+        // if (this.player1.receiveAttack(x, y)) {
+        //     console.log('hit')
+        // }
+        // else {
+        //     console.log('miss')
+        // }
+    }
+
     attackShip(player, x, y) {
         console.log('player')
         player.board.receiveAttack(x, y)
@@ -105,9 +129,13 @@ export default class Game {
             console.log(this.currentPlayer.board)
             // this.currentPlayer.renderBoard()
             // hitship.classList.add('hit')
+            if (this.player2.name !== 'computer') {
             this.removeEventListeners(this.currentPlayer)
             this.changeTurn()
-            this.addPlacementListeners(this.currentPlayer)
+            this.addPlacementListeners(this.currentPlayer)}
+            else {
+                this.computerAttack()
+            }
         }
     }
 
