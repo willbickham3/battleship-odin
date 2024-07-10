@@ -63,45 +63,30 @@ export default class Game {
             y = Math.floor(Math.random() * 10)
         }
         console.log(this.player2.board)
-        // if (this.setShip(this.currentPlayer, x, y)) {
-        //     console.log('success')
-        //     this.changeTurn()
-        //     this.addPlacementListeners(this.currentPlayer)
-        //     return 
-        // }
-        // else {
-        //     this.computerPlayer()
-        // }
-        
+    }
+
+    registerAttackOnDOM(player, x, y) {
+        let hitship = player.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+            if (hitship.classList.contains('hit')) {
+                return 
+            }
+
+            if (player.board.receiveAttack(x, y)) {
+                console.log(hitship)
+                hitship.classList.add("hit")
+            }
+            else {
+                hitship.style.backgroundColor = "white"
+            }
+            hitship.classList.remove("shiny")
     }
 
     computerAttack() {
         let x = Math.floor(Math.random() * 10)
         let y = Math.floor(Math.random() * 10)
         this.player1.board.receiveAttack(x, y)
-        // let hitship = this.player1.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-        //     if (hitship.classList.contains('hit')) {
-        //         return 
-        //     }
-
-        //     if (this.player1.board.receiveAttack(x, y)) {
-        //         console.log(hitship)
-        //         hitship.classList.add("hit")
-        //     }
-        //     else {
-        //         hitship.style.backgroundColor = "white"
-        //     }
-        // if (this.player1.receiveAttack(x, y)) {
-        //     console.log('hit')
-        // }
-        // else {
-        //     console.log('miss')
-        // }
-    }
-
-    attackShip(player, x, y) {
-        console.log('player')
-        player.board.receiveAttack(x, y)
+        console.log(x, y)
+        this.registerAttackOnDOM(this.player1, x, y)
     }
 
     clickEvent = (ev) => {
@@ -114,19 +99,7 @@ export default class Game {
 
         else {
             console.log("Here #2")
-            let hitship = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-            if (hitship.classList.contains('hit')) {
-                return 
-            }
-
-            if (this.currentPlayer.board.receiveAttack(x, y)) {
-                console.log(hitship)
-                hitship.classList.add("hit")
-            }
-            else {
-                hitship.style.backgroundColor = "white"
-            }
-            hitship.classList.remove("shiny")
+            this.registerAttackOnDOM(this.currentPlayer, x, y)
             console.log(this.currentPlayer.board)
             // this.currentPlayer.renderBoard()
             // hitship.classList.add('hit')
