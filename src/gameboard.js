@@ -49,13 +49,33 @@ export default class GameBoard {
     placeShip(shipName, x, y) {
         // valid ships: Carrier, Battleship, Destroyer, Submarine, Patrol Boat
 
+        let shipPlacementError = false;
         const ship = this.unplacedShips.find(obj => obj.name === `${shipName}`);
+
+
+        // first check if the individual spot is taken if so return
+
+        // next check if the length of the ship is taken
+
+        // finally check if adjacent squares are taken
+
+
+        let me = this.spotCheck(x, y)
+        let you = this.adjacencyCheck(x, y)
+
+        console.log(this.gameBoard, this.gameBoard[x][y], "spot: ", me)
+        console.log("adjacency: ", you)
 
         if (checkIfCoordsAlreadyLogged(this.takenSquares, x, y)) {
             "HEEEEELLLLOOOO"
-            throw Error("Cannot place a ship there! Try again!")
+            shipPlacementError = true
+            // throw Error("Cannot place a ship there! Try again!")
             return
 
+        }
+
+        if (ship == undefined) {
+            shipPlacementError = true
         }
 
         let adjacencyMatrix = [
@@ -71,6 +91,7 @@ export default class GameBoard {
         // Check to make sure that the ship can be fully placed
         let isPlacementValidArray = []
         if (!ship) {
+            shipPlacementError = true
             return
         }
         for (let index = 0; index < ship.length; index++) {
@@ -85,7 +106,8 @@ export default class GameBoard {
                 console.log(this.gameBoard[coordSet[0]][coordSet[1]])
                 if (this.gameBoard[coordSet[0]][coordSet[1]][0] !== null) {
                     console.log(this.gameBoard[coordSet[0]])
-                    throw new Error("Ship already exists.")
+                    shipPlacementError = true
+                    // throw new Error("Ship already exists.")
                     return
                 }
             });
@@ -154,7 +176,58 @@ export default class GameBoard {
         return true
     }
 
+    spotCheck(x, y) {
+        console.log("first check")
+        let spotOnBoard = this.gameBoard[x][y]
+        if (spotOnBoard[0] !== null) {
+            return true
+        }
+    
+        else {
+            return false
+        }
+    }
+    
+    adjacencyCheck(x, y) {
+        console.log("second check")
+        let invalid = false
+        let isPlacementValid = []
+        let adjacencyMatrix = [
+            [0, 0],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [-1, -1],
+            [-1, 0],
+            [0, -1]
+        ]
+    
+        adjacencyMatrix.forEach((set) => {
+            try {
+                if (this.gameBoard[x + set[0]][y + set[1]] !== null) {
+                    invalid = true
+                }
+            }
+            catch {
+                invalid = true
+            }
+        })
+        
+        if (invalid) {
+            return
+        }
+
+        else {
+            adjacencyMatrix.forEach((set) => {
+            isPlacementValid.push([x + set[0], y + set[1]])
+        })
+    
+        console.log(isPlacementValid)
+        }
+    }
+
 }
+
 
 
 function checkIfCoordsAlreadyLogged(array, a, b) {
