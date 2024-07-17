@@ -62,26 +62,36 @@ export default class GameBoard {
 
 
         let me = this.spotCheck(ship.length, x, y)
+        console.log("ME: ", me)
         let you = this.adjacencyCheck(ship.length, x, y)
+        console.log("YOU: ", you)
+
+        if (!me || !you) {return}
+
+        
         // console.log("-------")
         // console.log(this.gameBoard, this.gameBoard[x][y], "spot: ", me)
         // console.log("adjacency: ", you)
         // console.log("-------")
 
         let newtakenarray = []
-
+        console.log("Check-Point: 1")
         if (you) {    
             for (let set of you) {
                 if (!checkIfCoordsAlreadyLogged(this.experiment, set[0], set[1])) {
                 newtakenarray.push(set)
                 }
+
             }}
+        console.log("Check-Point: 2")
         if (me) {    
             for (let set of me) {
                 if (!checkIfCoordsAlreadyLogged(newtakenarray, set[0], set[1]) && !checkIfCoordsAlreadyLogged(this.experiment, set[0], set[1])) {
                 newtakenarray.push(set)}
             }}
-                
+        
+            console.log("Check-Point: 3")
+        
         for (let set of newtakenarray) {
             if(checkIfCoordsAlreadyLogged(this.takenSquares, set[0], set[1])) {
                 console.log("BAD PLAY")
@@ -91,7 +101,7 @@ export default class GameBoard {
                 this.experiment.push(set)
             }
         }
-
+        
         if (shipPlacementError) return;
 
         // console.log("taken spots:", newtakenarray)
@@ -110,75 +120,66 @@ export default class GameBoard {
             shipPlacementError = true
         }
 
-        let adjacencyMatrix = [
-            [0, 0],
-            [1, 0],
-            [0, 1],
-            [1, 1],
-            [-1, -1],
-            [-1, 0],
-            [0, -1]
-        ]
-
         // Check to make sure that the ship can be fully placed
         let isPlacementValidArray = []
         if (!ship) {
             shipPlacementError = true
             return
         }
-        for (let index = 0; index < ship.length; index++) {
-            isPlacementValidArray.push([x, y + index])
-        }
+        // for (let index = 0; index < ship.length; index++) {
+        //     isPlacementValidArray.push([x, y + index])
+        // }
         
 
 
-        try {
-            // check that ship doesnt already exist
-            isPlacementValidArray.forEach(coordSet => {
-                // console.log(coordSet)
-                // console.log(this.gameBoard[coordSet[0]][coordSet[1]])
-                if (this.gameBoard[coordSet[0]][coordSet[1]][0] !== null) {
-                    // console.log(this.gameBoard[coordSet[0]])
-                    shipPlacementError = true
-                    // throw new Error("Ship already exists.")
-                    return
-                }
-            });
+        // try {
+        //     // check that ship doesnt already exist
+        //     isPlacementValidArray.forEach(coordSet => {
+        //         // console.log(coordSet)
+        //         // console.log(this.gameBoard[coordSet[0]][coordSet[1]])
+        //         if (this.gameBoard[coordSet[0]][coordSet[1]][0] !== null) {
+        //             // console.log(this.gameBoard[coordSet[0]])
+        //             shipPlacementError = true
+        //             // throw new Error("Ship already exists.")
+        //             return
+        //         }
+        //     });
 
-            for (let index = 0; index < ship.length; index++) {
-                console.log('placement')
+        for (let index = 0; index < ship.length; index++) {
+            console.log('placement')
 
-                this.gameBoard[x][y + index] = ship
+            this.gameBoard[x][y + index] = ship
 
-                // Holds coordinates of placed ships
-                adjacencyMatrix.forEach(set => 
-                    {
-                        let check = checkIfCoordsAlreadyLogged(this.takenSquares, x + index + set[0], y + set[1])
-                        if (!check) {
-                            this.takenSquares.push([x + set[0], y + index + set[1]])
-                        }
-                        else {
-                            return
-                        }
-                        })
-                // console.log(this.takenSquares)
-            }
-            // console.log(ship)
-            this.ships.push(ship)
-            // console.log(this.gameBoard)
-            this.unplacedShips = this.unplacedShips.filter(ship => ship.name !== shipName)
-            return true
-            
-        } catch (error) {
-            return
-            if (ship == undefined) {
-                throw new Error(`"${shipName}" is not a valid ship. Please select a valid ship.`)
-            }
-            else {
-            let fail = "There was an error in placing your ship. Please make sure you have entered valid x/y coordinates."
-            throw new Error(fail)
-            }
+            // // Holds coordinates of placed ships
+            // adjacencyMatrix.forEach(set => 
+            //     {
+            //         let check = checkIfCoordsAlreadyLogged(this.takenSquares, x + index + set[0], y + set[1])
+            //         if (!check) {
+            //             this.takenSquares.push([x + set[0], y + index + set[1]])
+            //         }
+            //         else {
+            //             return
+            //         }
+            //         })
+            // console.log(this.takenSquares)
         }
+        // console.log(ship)
+        this.takenSquares.push(...newtakenarray)
+        this.ships.push(ship)
+        // console.log(this.gameBoard)
+        this.unplacedShips = this.unplacedShips.filter(ship => ship.name !== shipName)
+        return true
+            
+        // } catch (error) {
+        //     return
+        //     if (ship == undefined) {
+        //         throw new Error(`"${shipName}" is not a valid ship. Please select a valid ship.`)
+        //     }
+        //     else {
+        //     let fail = "There was an error in placing your ship. Please make sure you have entered valid x/y coordinates."
+        //     throw new Error(fail)
+        //     }
+        //}
     }
 
     receiveAttack(x, y) {
@@ -255,15 +256,14 @@ export default class GameBoard {
                     let spot = this.gameBoard[x + set[0]][y + index + set[1]]
                     // console.log("spot", spot[0], [x + set[0], y + index + set[1]])
                     // console.log(index, ": ", [x + set[0], y + index + set[1]])
-                    if (spot[0]) {
+                    if (spot[0] !== null) {
                         // console.log(this.gameBoard[x + set[0]][y + index + set[1]], [x + set[0], y + index + set[1]])
                         valid = false;
-                        //break;
+                        break;
                     }
                     else {
                         if (!checkIfCoordsAlreadyLogged(isPlacementValid, x + set[0], y + index + set[1])) {
                             isPlacementValid.push([x + set[0], y + index + set[1]])
-                            
                         }
                         continue
                     }
@@ -283,19 +283,8 @@ export default class GameBoard {
             return valid
         }
         else {
-        //     for (let index = 0; index < length; index++) {
-        //     //     for (let set of adjacencyMatrix) {
-        //     //         // if (!checkIfCoordsAlreadyLogged(isPlacementValid, x + set[0], y + index + set[1])) {
-        //     //         //     isPlacementValid.push([x + set[0], y + index + set[1]])
-                        
-        //     //         // }
-        //     //     // console.log(isPlacementValid)
-        //     // }
-        // }
-        // console.log("mein", isPlacementValid)
-        // console.log("length: ", length)
-        return isPlacementValid
-    }
+            return isPlacementValid
+        }
 }
 
 }
