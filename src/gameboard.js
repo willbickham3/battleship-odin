@@ -63,31 +63,40 @@ export default class GameBoard {
 
         let me = this.spotCheck(ship.length, x, y)
         let you = this.adjacencyCheck(ship.length, x, y)
-        console.log("-------")
-        console.log(this.gameBoard, this.gameBoard[x][y], "spot: ", me)
-        console.log("adjacency: ", you)
-        console.log("-------")
+        // console.log("-------")
+        // console.log(this.gameBoard, this.gameBoard[x][y], "spot: ", me)
+        // console.log("adjacency: ", you)
+        // console.log("-------")
 
         let newtakenarray = []
 
         if (you) {    
             for (let set of you) {
+                if (!checkIfCoordsAlreadyLogged(this.experiment, set[0], set[1])) {
                 newtakenarray.push(set)
+                }
             }}
         if (me) {    
             for (let set of me) {
-                if (!checkIfCoordsAlreadyLogged(newtakenarray, set[0], set[1])) {
+                if (!checkIfCoordsAlreadyLogged(newtakenarray, set[0], set[1]) && !checkIfCoordsAlreadyLogged(this.experiment, set[0], set[1])) {
                 newtakenarray.push(set)}
             }}
-
+                
         for (let set of newtakenarray) {
             if(checkIfCoordsAlreadyLogged(this.takenSquares, set[0], set[1])) {
                 console.log("BAD PLAY")
                 // alert("Bad boi")
             }
+            else {
+                this.experiment.push(set)
+            }
         }
 
-        console.log("taken spots:", newtakenarray)
+        if (shipPlacementError) return;
+
+        // console.log("taken spots:", newtakenarray)
+        // this.experiment.push(...newtakenarray)
+        console.log("Experimental Array: ", this.experiment)
 
         if (checkIfCoordsAlreadyLogged(this.takenSquares, x, y)) {
             "HEEEEELLLLOOOO"
@@ -201,7 +210,7 @@ export default class GameBoard {
     }
 
     spotCheck(length, x, y) {
-        console.log("first check")
+        // console.log("first check")
         let valid = true
         let isPlacementValid = []
         for (let index = 0; index < length; index++) {
@@ -218,7 +227,7 @@ export default class GameBoard {
             isPlacementValid.push([x, y + index])}}
         
         if (valid) {
-            console.log("Spot check: ", isPlacementValid)
+            // console.log("Spot check: ", isPlacementValid)
             return isPlacementValid
         }
         else {
@@ -227,7 +236,7 @@ export default class GameBoard {
     }
     
     adjacencyCheck(length, x, y) {
-        console.log("second check")
+        // console.log("second check")
         let valid = true
         let isPlacementValid = []
         let adjacencyMatrix = [
@@ -244,10 +253,10 @@ export default class GameBoard {
             for (let set of adjacencyMatrix) {
                 try {
                     let spot = this.gameBoard[x + set[0]][y + index + set[1]]
-                    console.log("spot", spot[0], [x + set[0], y + index + set[1]])
-                    console.log(index, ": ", [x + set[0], y + index + set[1]])
+                    // console.log("spot", spot[0], [x + set[0], y + index + set[1]])
+                    // console.log(index, ": ", [x + set[0], y + index + set[1]])
                     if (spot[0]) {
-                        console.log(this.gameBoard[x + set[0]][y + index + set[1]], [x + set[0], y + index + set[1]])
+                        // console.log(this.gameBoard[x + set[0]][y + index + set[1]], [x + set[0], y + index + set[1]])
                         valid = false;
                         break;
                     }
@@ -270,11 +279,11 @@ export default class GameBoard {
                         isPlacementValid.push([x + set[0], y + index + set[1]])
                         
                     }
-                console.log(isPlacementValid)
+                // console.log(isPlacementValid)
             }
         }
-        console.log("mein", isPlacementValid)
-        console.log("length: ", length)
+        // console.log("mein", isPlacementValid)
+        // console.log("length: ", length)
         return isPlacementValid
     }}
 
