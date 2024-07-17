@@ -10,6 +10,7 @@ export default class GameBoard {
 
         this.missedShots = []
         this.takenSquares = []
+        this.experiment = []
 
         // Creates the board
         for (let index = 0; index < 10; index++) {
@@ -60,11 +61,33 @@ export default class GameBoard {
         // finally check if adjacent squares are taken
 
 
-        let me = this.spotCheck(x, y)
-        let you = this.adjacencyCheck(x, y)
-
+        let me = this.spotCheck(ship.length, x, y)
+        let you = this.adjacencyCheck(ship.length, x, y)
+        console.log("-------")
         console.log(this.gameBoard, this.gameBoard[x][y], "spot: ", me)
         console.log("adjacency: ", you)
+        console.log("-------")
+
+        let newtakenarray = []
+
+        if (you) {    
+            for (let set of you) {
+                newtakenarray.push(set)
+            }}
+        if (me) {    
+            for (let set of me) {
+                if (!checkIfCoordsAlreadyLogged(newtakenarray, set[0], set[1])) {
+                newtakenarray.push(set)}
+            }}
+
+        for (let set of newtakenarray) {
+            if(checkIfCoordsAlreadyLogged(this.takenSquares, set[0], set[1])) {
+                console.log("BAD PLAY")
+                // alert("Bad boi")
+            }
+        }
+
+        console.log("taken spots:", newtakenarray)
 
         if (checkIfCoordsAlreadyLogged(this.takenSquares, x, y)) {
             "HEEEEELLLLOOOO"
@@ -97,15 +120,16 @@ export default class GameBoard {
         for (let index = 0; index < ship.length; index++) {
             isPlacementValidArray.push([x, y + index])
         }
+        
 
 
         try {
             // check that ship doesnt already exist
             isPlacementValidArray.forEach(coordSet => {
-                console.log(coordSet)
-                console.log(this.gameBoard[coordSet[0]][coordSet[1]])
+                // console.log(coordSet)
+                // console.log(this.gameBoard[coordSet[0]][coordSet[1]])
                 if (this.gameBoard[coordSet[0]][coordSet[1]][0] !== null) {
-                    console.log(this.gameBoard[coordSet[0]])
+                    // console.log(this.gameBoard[coordSet[0]])
                     shipPlacementError = true
                     // throw new Error("Ship already exists.")
                     return
@@ -128,11 +152,11 @@ export default class GameBoard {
                             return
                         }
                         })
-                console.log(this.takenSquares)
+                // console.log(this.takenSquares)
             }
-            console.log(ship)
+            // console.log(ship)
             this.ships.push(ship)
-            console.log(this.gameBoard)
+            // console.log(this.gameBoard)
             this.unplacedShips = this.unplacedShips.filter(ship => ship.name !== shipName)
             return true
             
@@ -176,55 +200,83 @@ export default class GameBoard {
         return true
     }
 
-    spotCheck(x, y) {
+    spotCheck(length, x, y) {
         console.log("first check")
-        let spotOnBoard = this.gameBoard[x][y]
-        if (spotOnBoard[0] !== null) {
-            return true
+        let valid = true
+        let isPlacementValid = []
+        for (let index = 0; index < length; index++) {
+            try {
+            let spotOnBoard = this.gameBoard[x][y + index]
+            if (spotOnBoard[0] !== null) {
+                valid = false
+            }
         }
-    
+            catch {
+                return
+            }
+            finally {
+            isPlacementValid.push([x, y + index])}}
+        
+        if (valid) {
+            console.log("Spot check: ", isPlacementValid)
+            return isPlacementValid
+        }
         else {
             return false
         }
     }
     
-    adjacencyCheck(x, y) {
+    adjacencyCheck(length, x, y) {
         console.log("second check")
-        let invalid = false
+        let valid = true
         let isPlacementValid = []
         let adjacencyMatrix = [
-            [0, 0],
+            [1, -1],
             [1, 0],
             [0, 1],
             [1, 1],
             [-1, -1],
             [-1, 0],
-            [0, -1]
+            [0, -1],
+            [-1, 1]
         ]
-    
-        adjacencyMatrix.forEach((set) => {
-            try {
-                if (this.gameBoard[x + set[0]][y + set[1]] !== null) {
-                    invalid = true
-                }
-            }
-            catch {
-                invalid = true
-            }
-        })
+        for (let index = 0; index < length; index++) {
+            for (let set of adjacencyMatrix) {
+                try {
+                    let spot = this.gameBoard[x + set[0]][y + index + set[1]]
+                    console.log("spot", spot[0], [x + set[0], y + index + set[1]])
+                    console.log(index, ": ", [x + set[0], y + index + set[1]])
+                    if (spot[0]) {
+                        console.log(this.gameBoard[x + set[0]][y + index + set[1]], [x + set[0], y + index + set[1]])
+                        valid = false;
+                        break;
+                    }
+                }   catch {
+                        valid = false
+                        break;
+                }}
+            
+            if (!valid) break;
+        }
         
-        if (invalid) {
-            return
+        if (!valid) {
+            console.log("invalid value = ", valid)
+            return valid
         }
-
         else {
-            adjacencyMatrix.forEach((set) => {
-            isPlacementValid.push([x + set[0], y + set[1]])
-        })
-    
-        console.log(isPlacementValid)
+            for (let index = 0; index < length; index++) {
+                for (let set of adjacencyMatrix) {
+                    if (!checkIfCoordsAlreadyLogged(isPlacementValid, x + set[0], y + index + set[1])) {
+                        isPlacementValid.push([x + set[0], y + index + set[1]])
+                        
+                    }
+                console.log(isPlacementValid)
+            }
         }
-    }
+        console.log("mein", isPlacementValid)
+        console.log("length: ", length)
+        return isPlacementValid
+    }}
 
 }
 
