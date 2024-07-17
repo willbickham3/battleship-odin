@@ -258,11 +258,21 @@ export default class GameBoard {
                     if (spot[0]) {
                         // console.log(this.gameBoard[x + set[0]][y + index + set[1]], [x + set[0], y + index + set[1]])
                         valid = false;
-                        break;
+                        //break;
+                    }
+                    else {
+                        if (!checkIfCoordsAlreadyLogged(isPlacementValid, x + set[0], y + index + set[1])) {
+                            isPlacementValid.push([x + set[0], y + index + set[1]])
+                            
+                        }
+                        continue
                     }
                 }   catch {
-                        valid = false
-                        break;
+                        continue
+                        console.log("index error")
+                        // valid = false
+                        //break;
+                        
                 }}
             
             if (!valid) break;
@@ -273,19 +283,20 @@ export default class GameBoard {
             return valid
         }
         else {
-            for (let index = 0; index < length; index++) {
-                for (let set of adjacencyMatrix) {
-                    if (!checkIfCoordsAlreadyLogged(isPlacementValid, x + set[0], y + index + set[1])) {
-                        isPlacementValid.push([x + set[0], y + index + set[1]])
+        //     for (let index = 0; index < length; index++) {
+        //     //     for (let set of adjacencyMatrix) {
+        //     //         // if (!checkIfCoordsAlreadyLogged(isPlacementValid, x + set[0], y + index + set[1])) {
+        //     //         //     isPlacementValid.push([x + set[0], y + index + set[1]])
                         
-                    }
-                // console.log(isPlacementValid)
-            }
-        }
+        //     //         // }
+        //     //     // console.log(isPlacementValid)
+        //     // }
+        // }
         // console.log("mein", isPlacementValid)
         // console.log("length: ", length)
         return isPlacementValid
-    }}
+    }
+}
 
 }
 
