@@ -23,29 +23,6 @@ export default class GameBoard {
         }
     }
 
-    // createDOMBoard() {
-    //     let gameContainer = document.createElement("div")
-    //     gameContainer.classList.add("game-container")
-
-    //     this.gameBoard.forEach((row) => {
-    //         let rowDiv = document.createElement("div")
-    //         rowDiv.classList.add("row")
-
-    //         row.forEach((square) => {
-    //             let gameSquare = document.createElement("div")
-    //             gameSquare.classList.add("square")
-
-    //             if (square[0] !== null) {
-    //                 gameSquare.classList.add("ship")
-    //             }
-
-    //             rowDiv.append(gameSquare)  //
-    //         })
-    //         gameContainer.append(rowDiv)   //
-    //     })
-    //     return gameContainer
-    // }
-
 
     placeShip(shipName, x, y) {
         // valid ships: Carrier, Battleship, Destroyer, Submarine, Patrol Boat
@@ -67,12 +44,6 @@ export default class GameBoard {
         console.log("YOU: ", you)
 
         if (!me || !you) {return}
-
-        
-        // console.log("-------")
-        // console.log(this.gameBoard, this.gameBoard[x][y], "spot: ", me)
-        // console.log("adjacency: ", you)
-        // console.log("-------")
 
         let newtakenarray = []
         console.log("Check-Point: 1")
@@ -126,42 +97,11 @@ export default class GameBoard {
             shipPlacementError = true
             return
         }
-        // for (let index = 0; index < ship.length; index++) {
-        //     isPlacementValidArray.push([x, y + index])
-        // }
-        
-
-
-        // try {
-        //     // check that ship doesnt already exist
-        //     isPlacementValidArray.forEach(coordSet => {
-        //         // console.log(coordSet)
-        //         // console.log(this.gameBoard[coordSet[0]][coordSet[1]])
-        //         if (this.gameBoard[coordSet[0]][coordSet[1]][0] !== null) {
-        //             // console.log(this.gameBoard[coordSet[0]])
-        //             shipPlacementError = true
-        //             // throw new Error("Ship already exists.")
-        //             return
-        //         }
-        //     });
 
         for (let index = 0; index < ship.length; index++) {
             console.log('placement')
 
             this.gameBoard[x][y + index] = ship
-
-            // // Holds coordinates of placed ships
-            // adjacencyMatrix.forEach(set => 
-            //     {
-            //         let check = checkIfCoordsAlreadyLogged(this.takenSquares, x + index + set[0], y + set[1])
-            //         if (!check) {
-            //             this.takenSquares.push([x + set[0], y + index + set[1]])
-            //         }
-            //         else {
-            //             return
-            //         }
-            //         })
-            // console.log(this.takenSquares)
         }
         // console.log(ship)
         this.takenSquares.push(...newtakenarray)
@@ -169,17 +109,6 @@ export default class GameBoard {
         // console.log(this.gameBoard)
         this.unplacedShips = this.unplacedShips.filter(ship => ship.name !== shipName)
         return true
-            
-        // } catch (error) {
-        //     return
-        //     if (ship == undefined) {
-        //         throw new Error(`"${shipName}" is not a valid ship. Please select a valid ship.`)
-        //     }
-        //     else {
-        //     let fail = "There was an error in placing your ship. Please make sure you have entered valid x/y coordinates."
-        //     throw new Error(fail)
-        //     }
-        //}
     }
 
     receiveAttack(x, y) {
