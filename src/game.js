@@ -111,6 +111,8 @@ export default class Game {
                 this.computerAttack()
             }
             if (this.player1.board.gameOver() || this.player2.board.gameOver()) {
+                this.removeEventListeners(this.player2)
+                
                 console.log("OVERERERERER")
             }
         }
