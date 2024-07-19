@@ -9,9 +9,7 @@ This is a Battleship game project developed as part of The Odin Project's JavaSc
   - [General Information](#general-information)
   - [Technologies Used](#technologies-used)
   - [Setup](#setup)
-  - [Usage](#usage)
   - [Features](#features)
-  - [Contributing](#contributing)
   - [License](#license)
   - [Contact](#contact)
 
