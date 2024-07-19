@@ -2,6 +2,8 @@
 
 This is a Battleship game project developed as part of The Odin Project's JavaScript curriculum. The game is implemented using JavaScript, HTML, and CSS.
 
+[Live Deployment](https://willbickham3.github.io/battleship-odin/)
+
 ## Table of Contents
 
 - [Battleship Project](#battleship-project)
@@ -17,7 +19,6 @@ This is a Battleship game project developed as part of The Odin Project's JavaSc
 
 This project is a classic Battleship game where players take turns to guess the locations of their opponent's ships on a grid. The first player to sink all of the opponent's ships wins the game.
 
-[Live Deployment](https://willbickham3.github.io/battleship-odin/)
 
 ## Technologies Used
 
