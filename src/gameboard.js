@@ -11,6 +11,7 @@ export default class GameBoard {
         this.missedShots = []
         this.takenSquares = []
         this.experiment = []
+        this.shots = [];
 
         // Creates the board
         for (let index = 0; index < 10; index++) {
@@ -120,6 +121,9 @@ export default class GameBoard {
             this.missedAttack()
             this.missedShots.push([x, y])
             return false
+        }
+        finally {
+            this.shots.push([x, y])
         }
     }
 
