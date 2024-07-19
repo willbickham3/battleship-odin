@@ -65,6 +65,19 @@ export default class Game {
         console.log(this.player2.board)
     }
 
+    checkIfValidShot(x, y) {
+        let valid = true;
+        let board = this.currentPlayer.board;
+        
+        let shots = board.shots
+        
+        for (let coordinate of shots) {
+            if (coordinate[0] == x && coordinate[1] == y) {valid = false; break}
+        }
+
+        return valid
+    }
+
     registerAttackOnDOM(player, x, y) {
         let hitship = player.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
             if (hitship.classList.contains('hit')) {
@@ -84,7 +97,11 @@ export default class Game {
     computerAttack() {
         let x = Math.floor(Math.random() * 10)
         let y = Math.floor(Math.random() * 10)
-        this.player1.board.receiveAttack(x, y)
+        while (!this.checkIfValidShot(x, y)) {
+            x = Math.floor(Math.random() * 10)
+            y = Math.floor(Math.random() * 10)
+        }
+        //this.player1.board.receiveAttack(x, y)
         console.log(x, y)
         this.registerAttackOnDOM(this.player1, x, y)
     }
@@ -98,7 +115,8 @@ export default class Game {
         }
 
         else {
-            console.log("Here #2")
+            if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
+                return}
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             console.log(this.currentPlayer.board)
             // this.currentPlayer.renderBoard()
@@ -108,7 +126,9 @@ export default class Game {
             this.changeTurn()
             this.addPlacementListeners(this.currentPlayer)}
             else {
+                this.changeTurn()
                 this.computerAttack()
+                this.changeTurn()
             }
             if (this.player1.board.gameOver() || this.player2.board.gameOver()) {
                 this.removeEventListeners(this.player2)
