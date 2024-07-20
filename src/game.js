@@ -59,7 +59,8 @@ export default class Game {
         
         while (this.player2.board.unplacedShips.length > 0) {
             let computerShips = computerBoard.getUnplacedShips()
-            computerBoard.placeShip(computerShips[0].name, x, y, this.placement_orientation);
+            let nextShip = computerShips[0]
+            computerBoard.placeShip(nextShip.name, x, y, this.placement_orientation);
             [x, y] = this.generateRandomCoordinates();
         }
     }
