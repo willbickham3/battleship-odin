@@ -7,6 +7,7 @@ export default class Game {
         this.currentPlayer = this.player1;
         this.opponent = this.player2;
         this.phase = "Placement"
+        this.placement_orientation = 'vertical'
     }
 
     changeTurn() {
@@ -97,6 +98,19 @@ export default class Game {
     computerAttack() {
         let x = Math.floor(Math.random() * 10)
         let y = Math.floor(Math.random() * 10)
+
+        let hitBool = this.currentPlayer.board.prev_hit
+        let hit_coordinates = this.currentPlayer.board.prev_attack
+        console.log("Computer Attack: ", hitBool)
+        if (hitBool) {
+            let newHit = hit_coordinates[1] + 1
+            x = hit_coordinates[0]
+            if (newHit > 10 || !this.checkIfValidShot(x, newHit)) {newHit = hit_coordinates[1] - 1}
+            
+            y = newHit
+            
+        }
+
         while (!this.checkIfValidShot(x, y)) {
             x = Math.floor(Math.random() * 10)
             y = Math.floor(Math.random() * 10)
@@ -118,7 +132,7 @@ export default class Game {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
             this.registerAttackOnDOM(this.currentPlayer, x, y)
-            console.log(this.currentPlayer.board)
+            // console.log(this.currentPlayer.board)
             // this.currentPlayer.renderBoard()
             // hitship.classList.add('hit')
             if (this.player2.name !== 'computer') {
@@ -132,10 +146,26 @@ export default class Game {
             }
             if (this.player1.board.gameOver() || this.player2.board.gameOver()) {
                 this.removeEventListeners(this.player2)
-                
-                console.log("OVERERERERER")
+
+                alert("Game Over. Please reload the page.")
+                // console.log("OVERERERERER")
             }
         }
+    }
+    removeShiny() {
+        let shinySquares = document.querySelectorAll('.shiny')
+        shinySquares.forEach((square) => {
+            square.classList.remove('shiny')
+        })
+    }
+    rotationEvent = (ev) => {
+        console.log(ev)
+        if (ev.key == 'r' || ev.code == 'KeyR') {
+            this.placement_orientation = this.placement_orientation === 'vertical' ? 'horizontal' : 'vertical';
+            this.removeShiny()
+        }
+        console.log(this.placement_orientation)
+        return this.placement_orientation
     }
 
     mouseOverEvent = (ev) => {
@@ -145,7 +175,9 @@ export default class Game {
 
         if (this.phase == "Placement") {
             for (let index = 0; index < ships[0].length; index++) {
-                let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
+                let colorSquare = this.placement_orientation === 'vertical' 
+                ? this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
+                : this.currentPlayer.DOMboard.querySelector(`[x="${x + index}"][y="${y}"]`)
                 colorSquare.classList.add("shiny")
             }}
         else {
@@ -160,7 +192,9 @@ export default class Game {
         let ships = this.currentPlayer.board.unplacedShips
         if (this.phase == "Placement") {
             for (let index = 0; index < ships[0].length; index++) {
-                let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
+                let colorSquare = this.placement_orientation === 'vertical' 
+                ? this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
+                : this.currentPlayer.DOMboard.querySelector(`[x="${x + index}"][y="${y}"]`)
                 colorSquare.classList.remove("shiny")
             }}
         else {
@@ -185,6 +219,7 @@ export default class Game {
             square.addEventListener("mouseout", this.mouseOutEvent)
             square.addEventListener('click', this.clickEvent)
         })
+        window.addEventListener('keydown', this.rotationEvent)
     }
 
     removeEventListeners(player) {
@@ -194,6 +229,7 @@ export default class Game {
             square.removeEventListener("mouseout", this.mouseOutEvent)
             square.removeEventListener('click', this.clickEvent)
         })
+        window.removeEventListener('keydown', this.rotationEvent)
 
     }
 
