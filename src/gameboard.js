@@ -27,6 +27,21 @@ export default class GameBoard {
         }
     }
 
+    getPlacedShips() {
+        return this.ships
+    }
+
+    getUnplacedShips() {
+        return this.unplacedShips
+    }
+
+    getShots() {
+        return this.shots
+    }
+
+    getPrevHitandAttack() {
+        return this.prev_hit, this.prev_attack
+    }
 
     placeShip(shipName, x, y, orientation) {
         // valid ships: Carrier, Battleship, Destroyer, Submarine, Patrol Boat
