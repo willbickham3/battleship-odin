@@ -28,27 +28,18 @@ export default class GameBoard {
     }
 
 
-    placeShip(shipName, x, y) {
+    placeShip(shipName, x, y, orientation) {
         // valid ships: Carrier, Battleship, Destroyer, Submarine, Patrol Boat
 
         let shipPlacementError = false;
         const ship = this.unplacedShips.find(obj => obj.name === `${shipName}`);
 
-
-        // first check if the individual spot is taken if so return
-
-        // next check if the length of the ship is taken
-
-        // finally check if adjacent squares are taken
-
-
-        let me = this.spotCheck(ship.length, x, y)
-        // console.log("ME: ", me)
-        // let you = this.adjacencyCheck(ship.length, x, y)
-        // console.log("YOU: ", you)
+        let me = this.spotCheck(ship.length, x, y, orientation);
+        // let you = this.adjacencyCheck(ship.length, x, y);
 
         if (!me) {return}
         // || !you
+
         let newtakenarray = []
         // console.log("Check-Point: 1")
         // if (you) {    
@@ -101,13 +92,10 @@ export default class GameBoard {
             shipPlacementError = true
             return
         }
-
-        for (let index = 0; index < ship.length; index++) {
-            // console.log('placement')
-
-            this.gameBoard[x][y + index] = ship
+        for (let set of me) {
+            this.gameBoard[set[0]][set[1]] = ship
         }
-        // console.log(ship)
+        
         this.takenSquares.push(...newtakenarray)
         this.ships.push(ship)
         // console.log(this.gameBoard)
@@ -150,13 +138,18 @@ export default class GameBoard {
         return true
     }
 
-    spotCheck(length, x, y) {
+    spotCheck(length, x, y, orientation) {
         // console.log("first check")
         let valid = true
         let isPlacementValid = []
+        let startX = x
+        let startY = y
+
         for (let index = 0; index < length; index++) {
+            x = orientation === 'vertical' ? startX : startX + index
+            y = orientation === 'vertical' ? startY + index : startY
             try {
-            let spotOnBoard = this.gameBoard[x][y + index]
+            let spotOnBoard = this.gameBoard[x][y]
             if (spotOnBoard[0] !== null) {
                 valid = false
             }
@@ -165,7 +158,7 @@ export default class GameBoard {
                 return
             }
             finally {
-            isPlacementValid.push([x, y + index])}}
+            isPlacementValid.push([x, y])}}
         
         if (valid) {
             // console.log("Spot check: ", isPlacementValid)
