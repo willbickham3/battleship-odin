@@ -40,12 +40,12 @@ export default class Game {
 }
 
     setShip(player, x, y) {
-        let ships = player.board.unplacedShips
+        let ships = player.board.getUnplacedShips()
+        // let ships = player.board.unplacedShips
         player.board.placeShip(ships[0].name, x, y, this.placement_orientation)
-        // console.log(this.currentPlayer.board, ships)
         this.currentPlayer.renderBoard()
         console.log(this.currentPlayer.board.ships.length)
-        if (this.player2.name !== "computer" || this.currentPlayer.board.ships.length == 5) {
+        if (this.currentPlayer.board.ships.length == 5 && this.opponent.board.ships.length == 5) {
             console.log('change')
             this.phase = "Battle"
             this.changeTurn()}
@@ -57,12 +57,14 @@ export default class Game {
         let computerShips = this.player2.board
         let x = Math.floor(Math.random() * 10)
         let y = Math.floor(Math.random() * 10)
+        
         while (this.player2.board.unplacedShips.length > 0) {
             console.log("event")
-            computerShips.placeShip(computerShips.unplacedShips[0].name, x, y, 'vertical')
+            computerShips.placeShip(computerShips.unplacedShips[0].name, x, y, this.placement_orientation)
             x = Math.floor(Math.random() * 10)
             y = Math.floor(Math.random() * 10)
         }
+        
         console.log(this.player2.board)
     }
 
@@ -105,8 +107,7 @@ export default class Game {
         if (hitBool) {
             let newHit = hit_coordinates[1] + 1
             x = hit_coordinates[0]
-            if (newHit > 10 || !this.checkIfValidShot(x, newHit)) {newHit = hit_coordinates[1] - 1}
-            
+            if (newHit > 9 || !this.checkIfValidShot(x, newHit)) {newHit = hit_coordinates[1] - 1}
             y = newHit
             
         }
