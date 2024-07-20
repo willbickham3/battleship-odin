@@ -41,7 +41,7 @@ export default class Game {
 
     setShip(player, x, y) {
         let ships = player.board.unplacedShips
-        player.board.placeShip(ships[0].name, x, y)
+        player.board.placeShip(ships[0].name, x, y, this.placement_orientation)
         // console.log(this.currentPlayer.board, ships)
         this.currentPlayer.renderBoard()
         console.log(this.currentPlayer.board.ships.length)
@@ -59,7 +59,7 @@ export default class Game {
         let y = Math.floor(Math.random() * 10)
         while (this.player2.board.unplacedShips.length > 0) {
             console.log("event")
-            computerShips.placeShip(computerShips.unplacedShips[0].name, x, y)
+            computerShips.placeShip(computerShips.unplacedShips[0].name, x, y, 'vertical')
             x = Math.floor(Math.random() * 10)
             y = Math.floor(Math.random() * 10)
         }
