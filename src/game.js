@@ -41,7 +41,7 @@ export default class Game {
 
     setShip(player, x, y) {
         let ships = player.board.getUnplacedShips()
-        // let ships = player.board.unplacedShips
+
         player.board.placeShip(ships[0].name, x, y, this.placement_orientation)
         this.currentPlayer.renderBoard()
         console.log(this.currentPlayer.board.ships.length)
@@ -54,18 +54,20 @@ export default class Game {
     }
 
     computerPlayer() {
-        let computerShips = this.player2.board
-        let x = Math.floor(Math.random() * 10)
-        let y = Math.floor(Math.random() * 10)
+        let computerBoard = this.player2.board;
+        let [x, y] = this.generateRandomCoordinates();
         
         while (this.player2.board.unplacedShips.length > 0) {
-            console.log("event")
-            computerShips.placeShip(computerShips.unplacedShips[0].name, x, y, this.placement_orientation)
-            x = Math.floor(Math.random() * 10)
-            y = Math.floor(Math.random() * 10)
+            let computerShips = computerBoard.getUnplacedShips()
+            computerBoard.placeShip(computerShips[0].name, x, y, this.placement_orientation);
+            [x, y] = this.generateRandomCoordinates();
         }
-        
-        console.log(this.player2.board)
+    }
+
+    generateRandomCoordinates() {
+        let x = Math.floor(Math.random() * 10)
+        let y = Math.floor(Math.random() * 10)
+        return [x, y]
     }
 
     checkIfValidShot(x, y) {
