@@ -13,6 +13,9 @@ export default class GameBoard {
         this.experiment = []
         this.shots = [];
 
+        this.prev_attack = null;
+        this.prev_hit = false;
+
         // Creates the board
         for (let index = 0; index < 10; index++) {
             const row = []
@@ -40,29 +43,29 @@ export default class GameBoard {
 
 
         let me = this.spotCheck(ship.length, x, y)
-        console.log("ME: ", me)
-        let you = this.adjacencyCheck(ship.length, x, y)
-        console.log("YOU: ", you)
+        // console.log("ME: ", me)
+        // let you = this.adjacencyCheck(ship.length, x, y)
+        // console.log("YOU: ", you)
 
-        if (!me || !you) {return}
-
+        if (!me) {return}
+        // || !you
         let newtakenarray = []
-        console.log("Check-Point: 1")
-        if (you) {    
-            for (let set of you) {
-                if (!checkIfCoordsAlreadyLogged(this.experiment, set[0], set[1])) {
-                newtakenarray.push(set)
-                }
+        // console.log("Check-Point: 1")
+        // if (you) {    
+        //     for (let set of you) {
+        //         if (!checkIfCoordsAlreadyLogged(this.experiment, set[0], set[1])) {
+        //         newtakenarray.push(set)
+        //         }
 
-            }}
-        console.log("Check-Point: 2")
+        //     }}
+        // console.log("Check-Point: 2")
         if (me) {    
             for (let set of me) {
                 if (!checkIfCoordsAlreadyLogged(newtakenarray, set[0], set[1]) && !checkIfCoordsAlreadyLogged(this.experiment, set[0], set[1])) {
                 newtakenarray.push(set)}
             }}
         
-            console.log("Check-Point: 3")
+            // console.log("Check-Point: 3")
         
         for (let set of newtakenarray) {
             if(checkIfCoordsAlreadyLogged(this.takenSquares, set[0], set[1])) {
@@ -78,7 +81,7 @@ export default class GameBoard {
 
         // console.log("taken spots:", newtakenarray)
         // this.experiment.push(...newtakenarray)
-        console.log("Experimental Array: ", this.experiment)
+        // console.log("Experimental Array: ", this.experiment)
 
         if (checkIfCoordsAlreadyLogged(this.takenSquares, x, y)) {
             "HEEEEELLLLOOOO"
@@ -100,7 +103,7 @@ export default class GameBoard {
         }
 
         for (let index = 0; index < ship.length; index++) {
-            console.log('placement')
+            // console.log('placement')
 
             this.gameBoard[x][y + index] = ship
         }
@@ -116,10 +119,14 @@ export default class GameBoard {
         try {
             this.gameBoard[x][y].hit()
             console.log("It's a hit!")
+            this.prev_attack = [x, y]
+            this.prev_hit = true
             return true
         } catch (error) {
             this.missedAttack()
             this.missedShots.push([x, y])
+            this.prev_attack = null
+            this.prev_hit = false
             return false
         }
         finally {
