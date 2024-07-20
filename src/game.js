@@ -154,9 +154,26 @@ export default class Game {
     }
     removeShiny() {
         let shinySquares = document.querySelectorAll('.shiny')
+        let ships = this.currentPlayer.board.unplacedShips
+        console.log(shinySquares)
         shinySquares.forEach((square) => {
             square.classList.remove('shiny')
         })
+
+        let prev_x = Number(shinySquares[0].attributes.x.value)
+        let prev_y = Number(shinySquares[0].attributes.y.value)
+        if (this.placement_orientation == 'vertical') {
+            for (let index = 0; index < ships[0].length; index++) {
+                let newSquare = this.currentPlayer.DOMboard.querySelector(`[x="${prev_x}"][y="${prev_y + index}"]`);
+                newSquare.classList.add('shiny');
+            }
+        }
+        else {
+            for (let index = 0; index < ships[0].length; index++) {
+                let newSquare = this.currentPlayer.DOMboard.querySelector(`[x="${prev_x + index}"][y="${prev_y}"]`);
+                newSquare.classList.add('shiny');
+            }
+        }
     }
     rotationEvent = (ev) => {
         console.log(ev)
