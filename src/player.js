@@ -51,12 +51,14 @@ export default class Player {
                     gameSquare.classList.add("ship")
                     console.log(square)
                     gameSquare.classList.add(`${square.name}`)
-                    let image = new Image()
-                    image.src = carrier
-                    console.log(image, gameSquare)
-
                     this.renderShipImagesOntoDom(gameSquare)
+                    let nextSquare = board[x][y + 1]
+                    if (!Array.isArray(nextSquare)) {
+                        gameSquare.style.transform = 'rotate(270deg)'
+                    }   
+                    
                 }
+
                 gameSquare.setAttribute('x', x)
                 gameSquare.setAttribute('y', y)
                 rowDiv.append(gameSquare)  //
