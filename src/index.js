@@ -1,3 +1,4 @@
+import GameRules from "./pregame.js"
 import Game from "./game.js";
 import './style.css';
 import _ from 'lodash';
@@ -10,8 +11,19 @@ import _ from 'lodash';
 // computer.renderBoard()
 // player1.board.placeShip("Destroyer", 3, 5)
 // player1.renderBoard()
-const game = new Game("player1", "computer");
-game.startGame()
+
+// game
+const pregame = new GameRules()
+pregame.ruleContainer()
+
+let startbutton = document.querySelector('.startButton')
+startbutton.addEventListener('click', () => {
+    pregame.removeRuleSet()
+    const game = new Game("player1", "computer");
+    game.startGame()
+})
+// const game = new Game("player1", "computer");
+// game.startGame()
 
 // const game = new Game("Me", "Computer")
 // game.startGame()
