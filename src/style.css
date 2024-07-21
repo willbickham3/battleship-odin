@@ -16,6 +16,12 @@ body {
     display: flex;
 }
 
+.welcomeScreen {
+    background-color: rgb(102, 76, 41);
+    border: 2px solid silver;
+    padding: 2%;
+}
+
 .square {
     width:  75px;
     height: 75px;
