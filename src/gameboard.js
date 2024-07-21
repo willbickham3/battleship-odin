@@ -5,7 +5,7 @@ export default class GameBoard {
         this.miss = 0       // Missed attacks
         this.gameBoard = []
         
-        this.unplacedShips = [new Ship("Carrier", 5), new Ship("Battleship", 4), new Ship("Destroyer", 3), new Ship("Submarine", 3), new Ship("Patrol Boat", 2)]
+        this.unplacedShips = [new Ship("Carrier", 5), new Ship("Battleship", 4), new Ship("Destroyer", 3), new Ship("Submarine", 3), new Ship("PatrolBoat", 2)]
         this.ships = []     // Holds ships placed
 
         this.missedShots = []
