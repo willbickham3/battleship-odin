@@ -56,6 +56,6 @@ const ruleOne = "1. You are given five ships to place. They are a Carrier, Battl
 const ruleTwo = "2. You are able to place your ships anywhere on the map besides directly on top of one another."
 const ruleThree = "3. You can change the orientation of your placement by pressing the R key on your keyboard."
 const ruleFour = "4. If playing against a computer player your map is located on the left."
-const ruleFive = "5. Ships are represented by the dark red squares. Hits are pink and misses are white."
+const ruleFive = "5. Ships are represented by their own sprites! Hits are pink and misses are white."
 const ruleSix = "6. The first player to destroy all ships wins!"
 const startMsg = "Press the button below to start the game and begin your assault."
