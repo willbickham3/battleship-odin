@@ -44,6 +44,7 @@ export default class Game {
 
         player.board.placeShip(ships[0].name, x, y, this.placement_orientation)
         this.currentPlayer.renderBoard()
+        // this.currentPlayer.updateDOM(x, y)
         console.log(this.currentPlayer.board.ships.length)
         if (this.currentPlayer.board.ships.length == 5 && this.opponent.board.ships.length == 5) {
             console.log('change')
@@ -109,17 +110,23 @@ export default class Game {
         let hit_coordinates = this.currentPlayer.board.prev_attack
         console.log("Computer Attack: ", hitBool)
         if (hitBool) {
+            console.log('problem here')
             let newHit = hit_coordinates[1] + 1
+            console.log(typeof(newHit))
             x = hit_coordinates[0]
-            if ((hit_coordinates[1] > 0 && newHit > 9) && !this.checkIfValidShot(x, newHit)) {newHit = hit_coordinates[1] - 1}
-            else {
-                while(!this.checkIfValidShot(x, newHit)) {
-                    x = Math.floor(Math.random() * 10)
-                    newHit = Math.floor(Math.random() * 10)
+            console.log(x, newHit)
+            if (newHit == 10) {
+                newHit -= 2
+                while (!this.checkIfValidShot(x, newHit)) {
+                    newHit -= 1
+                    console.log(newHit)
                 }
             }
+            if (!this.checkIfValidShot(x, newHit)) {
+                newHit = hit_coordinates[1] - 1
+            }
+
             y = newHit
-            
         }
 
         while (!this.checkIfValidShot(x, y)) {
