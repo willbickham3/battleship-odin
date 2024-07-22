@@ -110,6 +110,10 @@ export default class GameBoard {
         for (let set of me) {
             this.gameBoard[set[0]][set[1]] = ship
         }
+
+        if (orientation == 'horizontal') {
+            ship.rotation = true
+        }
         
         this.takenSquares.push(...newtakenarray)
         this.ships.push(ship)
