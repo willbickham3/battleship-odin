@@ -110,7 +110,13 @@ export default class Game {
         if (hitBool) {
             let newHit = hit_coordinates[1] + 1
             x = hit_coordinates[0]
-            if (newHit > 9 || !this.checkIfValidShot(x, newHit)) {newHit = hit_coordinates[1] - 1}
+            if ((hit_coordinates[1] > 0 && newHit > 9) && !this.checkIfValidShot(x, newHit)) {newHit = hit_coordinates[1] - 1}
+            else {
+                while(!this.checkIfValidShot(x, newHit)) {
+                    x = Math.floor(Math.random() * 10)
+                    newHit = Math.floor(Math.random() * 10)
+                }
+            }
             y = newHit
             
         }
