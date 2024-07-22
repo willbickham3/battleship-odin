@@ -65,6 +65,15 @@ export default class Player {
         return gameContainer
     }
 
+    updateDOM(x, y) {
+        let element = this.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
+        let ship = this.board
+        console.log(ship)
+        element.classList.add(`ship`)
+        element.classList.add(`${ship.name}`)
+        this.renderShipImagesOntoDom(element, ship)
+    }
+
     appendParentContainer(name) {
         let container = document.createElement('div');
         container.classList.add(`${name}`)
