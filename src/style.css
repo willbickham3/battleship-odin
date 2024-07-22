@@ -17,8 +17,12 @@ body {
 }
 
 .welcomeScreen {
-    background-color: rgb(102, 76, 41);
-    border: 2px solid silver;
+    /* background-image: url("./images/ruleboard.jpg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat; */
+    background-color: lightslategray;
+    border: 2px solid brown;
     padding: 2%;
     font-size: 1.5em;
     width: 65%;
@@ -30,6 +34,7 @@ body {
 
 article p {
     font-weight: 500;
+    color: rgb(248, 209, 34);
 }
 
 button {
