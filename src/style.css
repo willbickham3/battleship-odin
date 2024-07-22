@@ -45,10 +45,14 @@ button:hover {
   transform: scale(1.1);
 }
 
+.game-container {
+    border: 2px solid rgb(255, 255, 255);
+}
+
 .square {
-    width:  75px;
-    height: 75px;
-    border: 1px solid white;
+    width:  55px;
+    height: 55px;
+    border: 1px solid rgb(255, 255, 255, 0.3);
     background-color: hsla(195, 53%, 79%, 0.3);
     
 }
