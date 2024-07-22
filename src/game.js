@@ -86,19 +86,20 @@ export default class Game {
 
     registerAttackOnDOM(player, x, y) {
         let hitship = player.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-            if (hitship.classList.contains('hit')) {
-                return 
-            }
+        if (!hitship) {return}
+        if (hitship.classList.contains('hit')) {
+            return 
+        }
 
-            if (player.board.receiveAttack(x, y)) {
-                console.log(hitship)
-                hitship.classList.add("hit")
-            }
-            else {
-                hitship.style.backgroundColor = "white"
-            }
-            hitship.classList.remove("shiny")
-    }
+        if (player.board.receiveAttack(x, y)) {
+            console.log(hitship)
+            hitship.classList.add("hit")
+        }
+        else {
+            hitship.style.backgroundColor = "white"
+        }
+        hitship.classList.remove("shiny")
+        }
 
     computerAttack() {
         let x = Math.floor(Math.random() * 10)
