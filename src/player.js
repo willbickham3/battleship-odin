@@ -51,10 +51,7 @@ export default class Player {
                     gameSquare.classList.add("ship")
                     
                     gameSquare.classList.add(`${square.name}`)
-                    let previousSquare = board[x][y - 1]
-                    let nextSquare = board[x][y + 1]
-                    this.renderShipImagesOntoDom(gameSquare, nextSquare, previousSquare)
-                    
+                    this.renderShipImagesOntoDom(gameSquare, square)
                 }
 
                 gameSquare.setAttribute('x', x)
@@ -74,7 +71,7 @@ export default class Player {
         return container
     }
 
-    renderShipImagesOntoDom(element, nextElement, previousSquare) {
+    renderShipImagesOntoDom(element, square) {
         let image_to_add = null;
 
         if (element.classList.contains('Carrier')) {
@@ -105,12 +102,10 @@ export default class Player {
         element.style.backgroundRepeat = "no-repeat";
         element.style.backgroundSize = "90% 100%";
         element.style.backgroundPosition = "center";
-        console.log(nextElement)
-            if (nextElement instanceof Array && previousSquare instanceof Array) {
+            if (square.rotation) {
                 element.style.transform = "rotate(270deg)"
             }
-    }
-
+        }
         return element
     }
 
