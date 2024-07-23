@@ -1,9 +1,11 @@
+import ComputerPlayer from "./computerPlayer.js";
 import Player from "./player.js";
 
 export default class Game {
     constructor(player1Name, player2Name) {
         this.player1 = new Player(player1Name);
         this.player2 = new Player(player2Name);
+        console.log(this.player2)
         this.currentPlayer = this.player1;
         this.opponent = this.player2;
         this.phase = "Placement"
@@ -93,50 +95,14 @@ export default class Game {
         }
 
         if (player.board.receiveAttack(x, y)) {
-            console.log(hitship)
             hitship.classList.add("hit")
+            return true
         }
         else {
             hitship.style.backgroundColor = "white"
+            return false
         }
-        hitship.classList.remove("shiny")
         }
-
-    computerAttack() {
-        let x = Math.floor(Math.random() * 10)
-        let y = Math.floor(Math.random() * 10)
-
-        let hitBool = this.currentPlayer.board.prev_hit
-        let hit_coordinates = this.currentPlayer.board.prev_attack
-        console.log("Computer Attack: ", hitBool)
-        if (hitBool) {
-            console.log('problem here')
-            let newHit = hit_coordinates[1] + 1
-            console.log(typeof(newHit))
-            x = hit_coordinates[0]
-            console.log(x, newHit)
-            if (newHit == 10) {
-                newHit -= 2
-                while (!this.checkIfValidShot(x, newHit)) {
-                    newHit -= 1
-                    console.log(newHit)
-                }
-            }
-            if (!this.checkIfValidShot(x, newHit)) {
-                newHit = hit_coordinates[1] - 1
-            }
-
-            y = newHit
-        }
-
-        while (!this.checkIfValidShot(x, y)) {
-            x = Math.floor(Math.random() * 10)
-            y = Math.floor(Math.random() * 10)
-        }
-        //this.player1.board.receiveAttack(x, y)
-        console.log(x, y)
-        this.registerAttackOnDOM(this.player1, x, y)
-    }
 
     clickEvent = (ev) => {
         // console.log(this.phase)
@@ -159,14 +125,20 @@ export default class Game {
             this.addPlacementListeners(this.currentPlayer)}
             else {
                 this.changeTurn()
-                this.computerAttack()
+                let [x, y] = this.player2.board.computerAttack()
+                if (this.registerAttackOnDOM(this.player1, x, y)) {
+                    this.player2.board.setPrevAttackAndPrevHit(x, y)
+                }
+                else {
+                    this.player2.board.unsetPrevAttackAndPrevHit()
+                }
+                
                 this.changeTurn()
             }
             if (this.player1.board.gameOver() || this.player2.board.gameOver()) {
                 this.removeEventListeners(this.player2)
 
                 alert("Game Over. Please reload the page.")
-                // console.log("OVERERERERER")
             }
         }
     }
