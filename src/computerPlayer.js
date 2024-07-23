@@ -1,18 +1,19 @@
-import Player from "./player";
+import GameBoard from "./gameboard";
 
-export default class ComputerPlayer extends Player {
+export default class ComputerPlayer extends GameBoard {
     constructor() {
-        super('computer');
-        this.prev_hit = null;
-        this.prev_attack_bool = false;
-        this.attack_array = new Set(Array.from({ length: 10 }, (_, x) => Array.from({length: 10}, (_, y) => [x, y])).flat().map(coord => coord.join(',')));
-        this.attack_matrix = [
+        super();
+        this.prevHitShip = null
+        this.prevHit = null;
+        this.prevAttackBool = false;
+        this.attackSet = new Set(Array.from({ length: 10 }, (_, x) => Array.from({length: 10}, (_, y) => [x, y])).flat().map(coord => coord.join(',')));
+        this.attackMatrix = [
             [1, 0],
             [-1, 0],
             [0, 1],
             [0, -1]
         ]
-        this.enemy_rotation = null;
+        this.enemyRotation = null;
     }
 
     generateRandomCoordinates() {
@@ -22,19 +23,33 @@ export default class ComputerPlayer extends Player {
     }
 
     computerAttack() {
-        let hitBool         = this.prev_hit
-        let hit_coordinates = this.prev_attack
+        let hitBool        = this.prevAttackBool
+        let hitCoordinates = this.prevHit
+        
+        let x = null;
+        let y = null;
 
         if (hitBool) {
-            let x, y = hit_coordinates
+            console.log(this.prevHitShip)
+            console.log(hitCoordinates)
+            x = hitCoordinates[0];
+            y = hitCoordinates[1] + 1;
+            while (!this.checkValidityOfAttack(x, y)) {
+                y -= 1
+            }
         }
 
-        let [x, y] = this.generateRandomCoordinates()
+        while (!this.checkValidityOfAttack(x, y)) {
+            [x, y] = this.generateRandomCoordinates()
+        }
+
+        this.removeAttackFromSet(x, y)
+        console.log(this.attackSet)
         return [x, y]
     }
 
     checkValidityOfAttack(x, y) {
-        if (this.attack_array.has(`${x},${y}`)) {
+        if (this.attackSet.has(`${x},${y}`)) {
             return true
         }
         else {
@@ -43,18 +58,28 @@ export default class ComputerPlayer extends Player {
     }
 
     getRotationStatus() {
-        return this.enemy_rotation
+        return this.enemyRotation
     }
 
     pressTheAdvantage(x, y) {
 
     }
 
-    removeAttackFromArray(x, y) {
-        if (this.attack_array.has(`${x},${y}`)) {
-            this.attack_array.delete(`${x},${y}`)
+    removeAttackFromSet(x, y) {
+        if (this.attackSet.has(`${x},${y}`)) {
+            this.attackSet.delete(`${x},${y}`)
         }
-        return this.attack_array
+        return this.attackSet
+    }
+
+    setPrevAttackAndPrevHit(x, y) {
+        this.prevHit = [x, y]
+        this.prevAttackBool = true
+    }
+
+    unsetPrevAttackAndPrevHit() {
+        this.prevHit = null
+        this.prevAttackBool = false
     }
 
 }
