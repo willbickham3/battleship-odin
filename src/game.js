@@ -34,7 +34,7 @@ export default class Game {
         this.player2.renderBoard()
 
         if (this.player2.name == 'computer') {
-            this.computerPlayer()
+            this.player2.board.computerPlayer()
         }
 
         this.addPlacementListeners(this.player1)
@@ -46,7 +46,6 @@ export default class Game {
 
         player.board.placeShip(ships[0].name, x, y, this.placement_orientation)
         this.currentPlayer.renderBoard()
-        // this.currentPlayer.updateDOM(x, y)
         console.log(this.currentPlayer.board.ships.length)
         if (this.currentPlayer.board.ships.length == 5 && this.opponent.board.ships.length == 5) {
             console.log('change')
@@ -56,23 +55,23 @@ export default class Game {
         this.addPlacementListeners(this.currentPlayer)  // currentPlayer is now pointing to the next ship
     }
 
-    computerPlayer() {
-        let computerBoard = this.player2.board;
-        let [x, y] = this.generateRandomCoordinates();
+    // computerPlayer() {
+    //     let computerBoard = this.player2.board;
+    //     let [x, y] = this.generateRandomCoordinates();
         
-        while (this.player2.board.unplacedShips.length > 0) {
-            let computerShips = computerBoard.getUnplacedShips()
-            let nextShip = computerShips[0]
-            computerBoard.placeShip(nextShip.name, x, y, this.placement_orientation);
-            [x, y] = this.generateRandomCoordinates();
-        }
-    }
+    //     while (this.player2.board.unplacedShips.length > 0) {
+    //         let computerShips = computerBoard.getUnplacedShips()
+    //         let nextShip = computerShips[0]
+    //         computerBoard.placeShip(nextShip.name, x, y, this.placement_orientation);
+    //         [x, y] = this.generateRandomCoordinates();
+    //     }
+    // }
 
-    generateRandomCoordinates() {
-        let x = Math.floor(Math.random() * 10)
-        let y = Math.floor(Math.random() * 10)
-        return [x, y]
-    }
+    // generateRandomCoordinates() {
+    //     let x = Math.floor(Math.random() * 10)
+    //     let y = Math.floor(Math.random() * 10)
+    //     return [x, y]
+    // }
 
     checkIfValidShot(x, y) {
         let valid = true;
@@ -105,7 +104,6 @@ export default class Game {
         }
 
     clickEvent = (ev) => {
-        // console.log(this.phase)
         let x = Number(ev.target.getAttribute('x'));
         let y = Number(ev.target.getAttribute('y'));
         if (this.phase == "Placement") {
@@ -116,21 +114,23 @@ export default class Game {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
             this.registerAttackOnDOM(this.currentPlayer, x, y)
-            // console.log(this.currentPlayer.board)
-            // this.currentPlayer.renderBoard()
-            // hitship.classList.add('hit')
             if (this.player2.name !== 'computer') {
             this.removeEventListeners(this.currentPlayer)
             this.changeTurn()
             this.addPlacementListeners(this.currentPlayer)}
             else {
                 this.changeTurn()
+                let enemyShip = null
                 let [x, y] = this.player2.board.computerAttack()
                 if (this.registerAttackOnDOM(this.player1, x, y)) {
-                    this.player2.board.setPrevAttackAndPrevHit(x, y)
+                    enemyShip = this.player1.board.gameBoard[x][y]
+                    console.log(enemyShip)
+                    this.player2.board.setPrevAttackAndPrevHit(enemyShip, x, y)
                 }
                 else {
-                    this.player2.board.unsetPrevAttackAndPrevHit()
+                    console.log(enemyShip)
+                    if (enemyShip !== null && enemyShip.isSunk()) {
+                    this.player2.board.unsetPrevAttackAndPrevHit()}
                 }
                 
                 this.changeTurn()
