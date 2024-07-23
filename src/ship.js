@@ -16,5 +16,6 @@ export default class Ship {
         if (this.hits == this.length) {
             this.sunk = true
         }
+        else {return false}
     }
 }
