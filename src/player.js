@@ -1,3 +1,4 @@
+import ComputerPlayer from "./computerPlayer.js";
 import GameBoard from "./gameboard.js";
 
 // carrier
@@ -29,7 +30,7 @@ let patrolBoatIndex = 0
 export default class Player {
     constructor(name) {
         this.name = name
-        this.board = new GameBoard()
+        this.board = (name !== 'computer') ? new GameBoard() : new ComputerPlayer()
         this.DOMboard = this.createBoard(this.board.gameBoard)
     }
 
