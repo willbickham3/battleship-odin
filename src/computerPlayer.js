@@ -22,39 +22,14 @@ export default class ComputerPlayer extends Player {
     }
 
     computerAttack() {
-        if (hitBool) {
-            let x, y = hit_coordinates
-        }
-
-
         let hitBool         = this.prev_hit
         let hit_coordinates = this.prev_attack
 
         if (hitBool) {
-            
-            let newHit = hit_coordinates[1] + 1
-            x = hit_coordinates[0]
-
-            console.log(x, newHit)
-            if (newHit == 10) {
-                newHit -= 2
-                while (!this.checkIfValidShot(x, newHit)) {
-                    newHit -= 1
-                    console.log(newHit)
-                }
-            }
-            if (!this.checkIfValidShot(x, newHit)) {
-                newHit = hit_coordinates[1] - 1
-            }
-
-            y = newHit
+            let x, y = hit_coordinates
         }
 
-        while (!this.checkIfValidShot(x, y)) {
-            x = Math.floor(Math.random() * 10)
-            y = Math.floor(Math.random() * 10)
-        }
-        //this.player1.board.receiveAttack(x, y)
+        let [x, y] = this.generateRandomCoordinates()
         return [x, y]
     }
 
