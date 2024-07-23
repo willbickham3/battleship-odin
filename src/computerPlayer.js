@@ -23,19 +23,36 @@ export default class ComputerPlayer extends GameBoard {
     }
 
     computerAttack() {
-        let hitBool        = this.prevAttackBool
+        // let hitBool        = this.prevAttackBool
         let hitCoordinates = this.prevHit
+        // let prevHitCoordinates = this.prevHitShip[1]
         
         let x = null;
         let y = null;
 
-        if (hitBool) {
+        if (this.prevHitShip && this.prevHitShip.sunk) {
+            console.log("sunk")
+            this.unsetPrevAttackAndPrevHit()
+            // [x, y] = this.generateRandomCoordinates()
+            console.log(this.prevHitShip, this.prevHit, this.prevAttackBool)
+            console.log(x, y)
+        }
+
+        if (this.prevAttackBool) {
             console.log(this.prevHitShip)
             console.log(hitCoordinates)
-            x = hitCoordinates[0];
-            y = hitCoordinates[1] + 1;
-            while (!this.checkValidityOfAttack(x, y)) {
-                y -= 1
+            if (!this.prevHitShip.rotation) {
+                x = hitCoordinates[0];
+                y = hitCoordinates[1] + 1;
+                while (!this.checkValidityOfAttack(x, y)) {
+                    y -= 1
+                }}
+            else {
+                x = hitCoordinates[0] + 1;
+                y = hitCoordinates[1];
+                while (!this.checkValidityOfAttack(x, y)) {
+                    x -= 1
+                }
             }
         }
 
@@ -44,7 +61,7 @@ export default class ComputerPlayer extends GameBoard {
         }
 
         this.removeAttackFromSet(x, y)
-        console.log(this.attackSet)
+        // console.log(this.attackSet)
         return [x, y]
     }
 
@@ -72,14 +89,18 @@ export default class ComputerPlayer extends GameBoard {
         return this.attackSet
     }
 
-    setPrevAttackAndPrevHit(x, y) {
-        this.prevHit = [x, y]
-        this.prevAttackBool = true
+    setPrevAttackAndPrevHit(prevHitShip, x, y) {
+        this.prevHitShip = prevHitShip;
+        this.prevHit = [x, y];
+        this.prevAttackBool = true;
+
+        console.log(prevHitShip)
     }
 
     unsetPrevAttackAndPrevHit() {
-        this.prevHit = null
-        this.prevAttackBool = false
+        this.prevHitShip = null;
+        this.prevHit = null;
+        this.prevAttackBool = false;
     }
 
 }
