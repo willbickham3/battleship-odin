@@ -13,9 +13,6 @@ export default class GameBoard {
         this.experiment = []
         this.shots = [];
 
-        this.prev_attack = null;
-        this.prev_hit = false;
-
         // Creates the board
         for (let index = 0; index < 10; index++) {
             const row = []
@@ -40,7 +37,7 @@ export default class GameBoard {
     }
 
     getPrevHitandAttack() {
-        return this.prev_hit, this.prev_attack
+        return this.prevHit, this.prevAttack
     }
 
     placeShip(shipName, x, y, orientation) {
@@ -126,14 +123,10 @@ export default class GameBoard {
         try {
             this.gameBoard[x][y].hit()
             console.log("It's a hit!")
-            this.prev_attack = [x, y]
-            this.prev_hit = true
             return true
         } catch (error) {
             this.missedAttack()
             this.missedShots.push([x, y])
-            this.prev_attack = null
-            this.prev_hit = false
             return false
         }
         finally {
