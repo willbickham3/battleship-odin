@@ -1,8 +1,8 @@
-import GameRules from "./pregame.js"
-import Game from "./game.js";
+import GameRules from "./gameStates/pregame.js"
+import Game from "./gameStates/game.js";
 import './style.css';
 import _ from 'lodash';
-import ComputerPlayer from "./computerPlayer.js";
+import ComputerPlayer from "./computerLogic/computerPlayer.js";
 
 
 // const player1 = new Player("player1")

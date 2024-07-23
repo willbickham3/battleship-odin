@@ -1,4 +1,4 @@
-import ComputerPlayer from "./computerPlayer.js";
+import ComputerPlayer from "../computerLogic/computerPlayer.js";
 import GameBoard from "./gameboard.js";
 
 // carrier

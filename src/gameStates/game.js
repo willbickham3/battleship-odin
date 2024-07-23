@@ -1,5 +1,5 @@
-import ComputerPlayer from "./computerPlayer.js";
-import Player from "./player.js";
+import ComputerPlayer from "../computerLogic/computerPlayer.js";
+import Player from "../boardAssets/player.js";
 
 export default class Game {
     constructor(player1Name, player2Name) {

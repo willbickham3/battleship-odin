@@ -1,4 +1,4 @@
-import GameBoard from "./gameboard";
+import GameBoard from "../boardAssets/gameboard";
 
 export default class ComputerPlayer extends GameBoard {
     constructor() {
