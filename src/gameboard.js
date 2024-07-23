@@ -40,6 +40,30 @@ export default class GameBoard {
         return this.prevHit, this.prevAttack
     }
 
+    computerPlayer() {
+        let [x, y] = this.generateRandomCoordinates();
+        
+        while (this.unplacedShips.length > 0) {
+            let rndInt = Math.floor(Math.random() * 2) + 1
+            console.log(rndInt)
+            if (rndInt == 2) {
+            this.placement_orientation = 'vertical'}
+            else {
+                this.placement_orientation = 'horizontal'
+            }
+            let computerShips = this.getUnplacedShips()
+            let nextShip = computerShips[0]
+            this.placeShip(nextShip.name, x, y, this.placement_orientation);
+            [x, y] = this.generateRandomCoordinates();
+        }
+    }
+
+    generateRandomCoordinates() {
+        let x = Math.floor(Math.random() * 10)
+        let y = Math.floor(Math.random() * 10)
+        return [x, y]
+    }
+
     placeShip(shipName, x, y, orientation) {
         // valid ships: Carrier, Battleship, Destroyer, Submarine, Patrol Boat
 
