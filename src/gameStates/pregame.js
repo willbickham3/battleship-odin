@@ -31,10 +31,13 @@ export default class GameRules{
         let container = document.createElement('section')
         container.classList.add('welcomeScreen')
 
-        const pvpButton = this.startBtn('player')
-        const compButton = this.startBtn('computer')
+        const buttonContainer = document.createElement("div")
+        buttonContainer.classList.add('buttonContainer')
+        const pvpButton = this.startBtn('Player')
+        const compButton = this.startBtn('Computer')
+        buttonContainer.append(pvpButton, compButton)
 
-        container.append(welcomeMessage, rules, startMessage, pvpButton, compButton)
+        container.append(welcomeMessage, rules, startMessage, buttonContainer)
         return container
     }
 
