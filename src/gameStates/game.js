@@ -34,7 +34,10 @@ export default class Game {
         this.player2.renderBoard()
 
         if (this.player2.name == 'computer') {
+            let computer = document.querySelector('.computer')
             this.player2.board.computerPlayer()
+            computer.removeChild(computer.firstChild)
+            this.player2.DOMboard.parentElement.prepend(this.player2.renderStatusBar())
         }
 
         this.addPlacementListeners(this.player1)
@@ -56,7 +59,7 @@ export default class Game {
     }
 
     showAShip(player) {
-        
+
     }
 
     setShip(player, x, y) {
@@ -97,6 +100,10 @@ export default class Game {
 
         if (player.board.receiveAttack(x, y)) {
             hitship.classList.add("hit")
+            let ship = player.board.gameBoard[x][y]
+            let shipName = player.board.gameBoard[x][y].name
+            if (ship.sunk) {let statusBar = document.querySelector(`.${player.name}`)
+            statusBar.querySelector(`.${shipName}`).style.backgroundColor = "red"}
             return true
         }
         else {
