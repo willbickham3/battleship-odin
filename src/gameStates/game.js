@@ -55,24 +55,6 @@ export default class Game {
         this.addPlacementListeners(this.currentPlayer)  // currentPlayer is now pointing to the next ship
     }
 
-    // computerPlayer() {
-    //     let computerBoard = this.player2.board;
-    //     let [x, y] = this.generateRandomCoordinates();
-        
-    //     while (this.player2.board.unplacedShips.length > 0) {
-    //         let computerShips = computerBoard.getUnplacedShips()
-    //         let nextShip = computerShips[0]
-    //         computerBoard.placeShip(nextShip.name, x, y, this.placement_orientation);
-    //         [x, y] = this.generateRandomCoordinates();
-    //     }
-    // }
-
-    // generateRandomCoordinates() {
-    //     let x = Math.floor(Math.random() * 10)
-    //     let y = Math.floor(Math.random() * 10)
-    //     return [x, y]
-    // }
-
     checkIfValidShot(x, y) {
         let valid = true;
         let board = this.currentPlayer.board;
@@ -114,6 +96,10 @@ export default class Game {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
             this.registerAttackOnDOM(this.currentPlayer, x, y)
+            if (this.player2.board.gameOver()) {
+                console.log("play again?")
+                confirm("Play again?")
+            }
             if (this.player2.name !== 'computer') {
             this.removeEventListeners(this.currentPlayer)
             this.changeTurn()
@@ -135,8 +121,10 @@ export default class Game {
                 
                 this.changeTurn()
             }
-            if (this.player1.board.gameOver() || this.player2.board.gameOver()) {
+            if (this.player2.board.gameOver()) {
                 this.removeEventListeners(this.player2)
+                console.log("play again?")
+                confirm("Play again?")
 
                 alert("Game Over. Please reload the page.")
             }
