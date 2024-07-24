@@ -2,28 +2,28 @@ import ComputerPlayer from "../computerLogic/computerPlayer.js";
 import GameBoard from "./gameboard.js";
 
 // carrier
-const requireCarrier = require.context("./battleship-assets/Carrier/Pieces", false, /\.png$/);
+const requireCarrier = require.context("../battleship-assets/Carrier/Pieces", false, /\.png$/);
 const carrier = requireCarrier.keys().map(requireCarrier);
 let carrierIndex = 0
 
 // destroyer
-const requireDestroyer = require.context("./battleship-assets/Destroyer/Pieces", false, /\.png$/);
+const requireDestroyer = require.context("../battleship-assets/Destroyer/Pieces", false, /\.png$/);
 const destroyer = requireDestroyer.keys().map(requireDestroyer);
 let destroyerIndex = 0
 
 // battleship
-const requireBattleship = require.context("./battleship-assets/Battleship/Pieces", false, /\.png$/);
+const requireBattleship = require.context("../battleship-assets/Battleship/Pieces", false, /\.png$/);
 const battleship = requireBattleship.keys().map(requireBattleship);
 let battleshipIndex = 0
 
 // submarine
-const requireSubmarine = require.context("./battleship-assets/Submarine/Pieces", false, /\.png$/);
+const requireSubmarine = require.context("../battleship-assets/Submarine/Pieces", false, /\.png$/);
 const submarine = requireSubmarine.keys().map(requireSubmarine);
 let submarineIndex = 0
 
 // patrol boat
 
-const requirePatrolBoat = require.context("./battleship-assets/PatrolBoat/Pieces", false, /\.png$/);
+const requirePatrolBoat = require.context("../battleship-assets/PatrolBoat/Pieces", false, /\.png$/);
 const patrolBoat = requirePatrolBoat.keys().map(requirePatrolBoat);
 let patrolBoatIndex = 0
 
