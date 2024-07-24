@@ -1,5 +1,12 @@
 import ComputerPlayer from "../computerLogic/computerPlayer.js";
 import GameBoard from "./gameboard.js";
+import carrierImage from "../battleship-assets/Carrier/ShipCarrierHull.png";
+import destroyerImage from "../battleship-assets/Destroyer/ShipDestroyerHull.png";
+import battleshipImage from "../battleship-assets/Battleship/ShipBattleshipHull.png";
+import submarineImage from "../battleship-assets/Submarine/ShipSubMarineHull.png";
+import patrolBoatImage from "../battleship-assets/PatrolBoat/ShipPatrolBoatHull.png";
+
+const shipsArray = [carrierImage, battleshipImage, destroyerImage, submarineImage, patrolBoatImage]
 
 export default class Player {
     constructor(name) {
@@ -93,24 +100,48 @@ export default class Player {
         return element
     }
 
+    renderStatusBar() {
+        const shipContainer = document.createElement("div");
+        shipContainer.classList.add("statusBar")
+        let x = 0
+        for (let ship of this.board.ships) {
+            let shipDiv = document.createElement('div');
+            shipDiv.classList.add(`${ship.name}`)
+            shipDiv.style.backgroundImage = `url(${shipsArray[x]})`
+            shipDiv.style.backgroundRepeat = "no-repeat";
+            shipDiv.style.backgroundSize = "contain";
+            shipDiv.style.backgroundPosition = "center";
+            shipContainer.append(shipDiv)
+            x += 1
+        }
+        return shipContainer
+    }
+
     renderBoard() {
         this.DOMboard = this.createBoard(this.board.gameBoard)
         let gameContainer = document.querySelector(`.game-container.${this.name}`)
         let main = document.querySelector(".root")
+        let ship = this.renderStatusBar()
+        let shipContainer = document.querySelector('.statusBar')
 
         if (!gameContainer) {
             let parentContainer = this.appendParentContainer(this.name)
-            parentContainer.append(this.DOMboard)
+            parentContainer.append(ship, this.DOMboard)
             main.append(parentContainer)
         }
 
         // console.log(gameContainer)
         else {
             let parentElement = gameContainer.parentElement
-            parentElement.removeChild(gameContainer)
-            parentElement.append(this.DOMboard)
+            let shipParent = shipContainer.parentElement
+            console.log(shipParent, parentElement)
+            while (parentElement.firstChild) {
+                parentElement.removeChild(parentElement.firstChild)
+            }
+            // parentElement.removeChild(gameContainer)
+            // shipParent.removeChild(shipContainer)
+            parentElement.append(ship, this.DOMboard)
         }
-
         // main.append(this.DOMboard)
     }
 
