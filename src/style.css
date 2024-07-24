@@ -12,6 +12,12 @@ body {
     display: flex;
 }
 
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
 .root {
     display: flex;
 }
