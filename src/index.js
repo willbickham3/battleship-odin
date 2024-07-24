@@ -12,7 +12,7 @@ let startbutton = document.querySelectorAll('button');
 let player = null;
 startbutton.forEach((button) => {
     button.addEventListener('click', () => {
-        if (button.classList.contains("computer")) {
+        if (button.classList.contains("Computer")) {
             player = "computer"
         }
         else {
@@ -23,8 +23,3 @@ startbutton.forEach((button) => {
         game.startGame()
     })
 })
-// startbutton.addEventListener('click', () => {
-//     pregame.removeRuleSet()
-//     const game = new Game("player1", "computer");
-//     game.startGame()
-// })
