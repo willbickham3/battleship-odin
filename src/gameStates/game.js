@@ -41,17 +41,37 @@ export default class Game {
         // this.addPlacementListeners(this.player2)
 }
 
+    showTheShips(player) {
+        const playerShipImages = player.DOMboard.querySelectorAll('.ship');
+        playerShipImages.forEach((ship) => {
+            ship.style.backgroundSize = "90% 100%";
+        })
+    }
+
+    hideTheShips(player) {
+        const playerShipImages = player.DOMboard.querySelectorAll('.ship');
+        playerShipImages.forEach((ship) => {
+            ship.style.backgroundSize = "0 0";
+        })
+    }
+
+    showAShip(player) {
+        
+    }
+
     setShip(player, x, y) {
         let ships = player.board.getUnplacedShips()
 
         player.board.placeShip(ships[0].name, x, y, this.placement_orientation)
         this.currentPlayer.renderBoard()
-        console.log(this.currentPlayer.board.ships.length)
+
         if (this.currentPlayer.board.ships.length == 5 && this.opponent.board.ships.length == 5) {
             console.log('change')
             this.phase = "Battle"
             this.changeTurn()}
-
+        if (this.player2.name !== 'computer') {
+            this.changeTurn()
+        }
         this.addPlacementListeners(this.currentPlayer)  // currentPlayer is now pointing to the next ship
     }
 
@@ -88,7 +108,17 @@ export default class Game {
     clickEvent = (ev) => {
         let x = Number(ev.target.getAttribute('x'));
         let y = Number(ev.target.getAttribute('y'));
+
+        let currentShip = this.currentPlayer.board.getUnplacedShips()
+        let shipLength = null
+        if (currentShip.length !== 0) {shipLength = currentShip[0].length}
+        let board       = this.currentPlayer.board
+        let orientation = this.placement_orientation
+
         if (this.phase == "Placement") {
+            if (!board.spotCheck(shipLength, x, y, orientation)) {
+                return
+            }
             this.setShip(this.currentPlayer, x, y)
         }
 
@@ -97,6 +127,8 @@ export default class Game {
                 return}
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             if (this.player2.board.gameOver()) {
+                this.removeEventListeners(this.player1)
+                this.removeEventListeners(this.player2)
                 console.log("play again?")
                 confirm("Play again?")
             }
