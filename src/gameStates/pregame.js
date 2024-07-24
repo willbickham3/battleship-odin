@@ -31,9 +31,10 @@ export default class GameRules{
         let container = document.createElement('section')
         container.classList.add('welcomeScreen')
 
-        const startButton = this.startBtn()
+        const pvpButton = this.startBtn('player')
+        const compButton = this.startBtn('computer')
 
-        container.append(welcomeMessage, rules, startMessage, startButton)
+        container.append(welcomeMessage, rules, startMessage, pvpButton, compButton)
         return container
     }
 
@@ -41,10 +42,10 @@ export default class GameRules{
         this.main.removeChild(document.querySelector('.welcomeScreen'))
     }
 
-    startBtn() {
+    startBtn(string) {
         const startBtn = document.createElement('button');
-        startBtn.innerText = "Start Game"
-        startBtn.classList.add('startButton')
+        startBtn.innerText = `Start ${string} Game`
+        startBtn.classList.add(`${string}`)
         return startBtn
     }
 
