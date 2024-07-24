@@ -68,6 +68,18 @@ button:hover {
     
 }
 
+.statusBar > div{
+    height: auto;
+    width: 20%;
+}
+
+.statusBar {
+    display: flex;
+    height: 5em;
+    width: 100%;
+    background-color: aliceblue;
+}
+
 .ship {
     /* background-color: red; */
 }
