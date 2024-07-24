@@ -106,14 +106,9 @@ export default class GameBoard {
         
         if (shipPlacementError) return;
 
-        // console.log("taken spots:", newtakenarray)
-        // this.experiment.push(...newtakenarray)
-        // console.log("Experimental Array: ", this.experiment)
-
         if (checkIfCoordsAlreadyLogged(this.takenSquares, x, y)) {
             "HEEEEELLLLOOOO"
             shipPlacementError = true
-            // throw Error("Cannot place a ship there! Try again!")
             return
 
         }
@@ -123,7 +118,6 @@ export default class GameBoard {
         }
 
         // Check to make sure that the ship can be fully placed
-        let isPlacementValidArray = []
         if (!ship) {
             shipPlacementError = true
             return
@@ -138,7 +132,6 @@ export default class GameBoard {
         
         this.takenSquares.push(...newtakenarray)
         this.ships.push(ship)
-        // console.log(this.gameBoard)
         this.unplacedShips = this.unplacedShips.filter(ship => ship.name !== shipName)
         return true
     }
