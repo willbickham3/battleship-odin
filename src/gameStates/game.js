@@ -18,7 +18,6 @@ export default class Game {
         // }
         this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1
         this.opponent = this.opponent === this.player1 ? this.player2 : this.player1
-
         // if (this.currentPlayer.name == 'computer') {
         //     this.computerPlayer()
         // }
@@ -65,16 +64,61 @@ export default class Game {
     setShip(player, x, y) {
         let ships = player.board.getUnplacedShips()
 
+        let t1 = performance.now()
         player.board.placeShip(ships[0].name, x, y, this.placement_orientation)
+        // this.currentPlayer.updateDOM(x, y)
+        // this.removeShiny();
+        // let t2 = performance.now()
+        // console.log(t1, t2, "time: ", t2 - t1)
+
         this.currentPlayer.renderBoard()
+        let t2 = performance.now()
+        console.log(t2 - t1)
 
         if (this.currentPlayer.board.ships.length == 5 && this.opponent.board.ships.length == 5) {
             console.log('change')
+            this.removeEventListeners(this.currentPlayer)
             this.phase = "Battle"
-            this.changeTurn()}
-        if (this.player2.name !== 'computer') {
             this.changeTurn()
+            if (this.player2.name !== 'computer'){
+                this.hideTheShips(this.currentPlayer)
+                this.hideTheShips(this.opponent)
+                setTimeout(() => {
+                    alert("Game Start. Click Ok when ready.")
+                    console.log(this.currentPlayer)
+                    this.removeEventListeners(this.currentPlayer)
+                    console.log("Current Player: ", this.currentPlayer, "Opponent: ", this.opponent)
+                    this.changeTurn()
+                    console.log("Current Player: ", this.currentPlayer, "Opponent: ", this.opponent)
+                    this.hideTheShips(this.currentPlayer)
+                    this.showTheShips(this.opponent)
+                    this.addPlacementListeners(this.currentPlayer)
+                }, "2 seconds")
+                // console.log(this.currentPlayer)
+                // this.removeEventListeners(this.currentPlayer)
+                // this.hideTheShips(this.currentPlayer)
+                // console.log("Current Player: ", this.currentPlayer, "Opponent: ", this.opponent)
+                // this.changeTurn()
+                // console.log("Current Player: ", this.currentPlayer, "Opponent: ", this.opponent)
+                // this.hideTheShips(this.currentPlayer)
+                // this.showTheShips(this.opponent)
+                // this.addPlacementListeners(this.currentPlayer)
+                return
+            // this.placementPauseForTwoPlayers()
+            // setTimeout(() => {
+            //     this.hideTheShips(this.currentPlayer)
+            //     this.changeTurn()
+            //     this.addPlacementListeners(this.currentPlayer)
+            //     this.showTheShips(this.opponent)
+            // }, "1 second")
+            console.log(this.currentPlayer)
         }
+            
+        }
+        if (this.player2.name !== 'computer') {
+            this.placementPauseForTwoPlayers()
+        }
+        console.log("poggie")
         this.addPlacementListeners(this.currentPlayer)  // currentPlayer is now pointing to the next ship
     }
 
@@ -102,8 +146,12 @@ export default class Game {
             hitship.classList.add("hit")
             let ship = player.board.gameBoard[x][y]
             let shipName = player.board.gameBoard[x][y].name
-            if (ship.sunk) {let statusBar = document.querySelector(`.${player.name}`)
-            statusBar.querySelector(`.${shipName}`).style.backgroundColor = "red"}
+            if (ship.sunk) {
+                let statusBar = document.querySelector(`.${player.name}`)
+                // let player = document.querySelector(`.${player.name}`)
+                // player.querySelector(".statusBar")
+                console.log(statusBar)
+                statusBar.querySelector(`.${shipName}`).style.backgroundColor = "red"}
             return true
         }
         else {
@@ -111,6 +159,30 @@ export default class Game {
             return false
         }
         }
+
+    placementPauseForTwoPlayers() {
+        if (this.player2.name !== 'computer') {
+            this.hideTheShips(this.currentPlayer)
+            this.changeTurn()
+            setTimeout(() => {
+                alert("Pass the screen!")
+                this.placement_orientation = "vertical"
+                this.showTheShips(this.currentPlayer)
+            }, "1 second")
+        }
+    }
+
+    battlePauseForTwoPlayers() {
+        this.hideTheShips(this.opponent)
+        this.removeEventListeners(this.currentPlayer)
+        
+        setTimeout(() => {
+            alert("Pass the screen!")
+            this.showTheShips(this.currentPlayer)
+            this.changeTurn()
+            
+        }, "1 second")
+    }
 
     clickEvent = (ev) => {
         let x = Number(ev.target.getAttribute('x'));
@@ -126,23 +198,32 @@ export default class Game {
             if (!board.spotCheck(shipLength, x, y, orientation)) {
                 return
             }
+            this.removeShiny()
             this.setShip(this.currentPlayer, x, y)
+            // this.placementPauseForTwoPlayers()
         }
 
         else {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
             this.registerAttackOnDOM(this.currentPlayer, x, y)
+            // if (this.player2.name !== 'computer') {
+            //     this.placementPauseForTwoPlayers()
+            // }
             if (this.player2.board.gameOver()) {
+                this.showTheShips(this.player1)
+                this.showTheShips(this.player2)
                 this.removeEventListeners(this.player1)
                 this.removeEventListeners(this.player2)
                 console.log("play again?")
                 confirm("Play again?")
+                return
             }
             if (this.player2.name !== 'computer') {
-            this.removeEventListeners(this.currentPlayer)
-            this.changeTurn()
-            this.addPlacementListeners(this.currentPlayer)}
+                // needs ground up build
+                this.battlePauseForTwoPlayers()
+                this.addPlacementListeners(this.opponent)
+                }
             else {
                 this.changeTurn()
                 let enemyShip = null
@@ -160,12 +241,15 @@ export default class Game {
                 
                 this.changeTurn()
             }
-            if (this.player2.board.gameOver()) {
+            if (this.player1.board.gameOver()) {
+                this.showTheShips(this.player1)
+                this.showTheShips(this.player2)
+                this.removeEventListeners(this.player1)
                 this.removeEventListeners(this.player2)
                 console.log("play again?")
                 confirm("Play again?")
-
                 alert("Game Over. Please reload the page.")
+                return
             }
         }
     }
@@ -179,6 +263,7 @@ export default class Game {
 
         let prev_x = Number(shinySquares[0].attributes.x.value)
         let prev_y = Number(shinySquares[0].attributes.y.value)
+        if (ships.length > 0){
         if (this.placement_orientation == 'vertical') {
             for (let index = 0; index < ships[0].length; index++) {
                 let newSquare = this.currentPlayer.DOMboard.querySelector(`[x="${prev_x}"][y="${prev_y + index}"]`);
@@ -190,7 +275,7 @@ export default class Game {
                 let newSquare = this.currentPlayer.DOMboard.querySelector(`[x="${prev_x + index}"][y="${prev_y}"]`);
                 newSquare.classList.add('shiny');
             }
-        }
+        }}
     }
     rotationEvent = (ev) => {
         console.log(ev)
