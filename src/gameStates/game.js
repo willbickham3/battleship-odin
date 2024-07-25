@@ -36,7 +36,9 @@ export default class Game {
             let computer = document.querySelector('.computer')
             this.player2.board.computerPlayer()
             computer.removeChild(computer.firstChild)
-            this.player2.DOMboard.parentElement.prepend(this.player2.renderStatusBar())
+            this.player2.renderBoard()
+            this.hideTheShips(this.player2)
+            // this.player2.DOMboard.parentElement.prepend(this.player2.renderStatusBar())
         }
 
         this.addPlacementListeners(this.player1)
@@ -216,7 +218,9 @@ export default class Game {
                 this.removeEventListeners(this.player1)
                 this.removeEventListeners(this.player2)
                 console.log("play again?")
-                confirm("Play again?")
+                setTimeout(() => {
+                    confirm("Play again?")
+                }, "1 second")
                 return
             }
             if (this.player2.name !== 'computer') {
@@ -247,8 +251,9 @@ export default class Game {
                 this.removeEventListeners(this.player1)
                 this.removeEventListeners(this.player2)
                 console.log("play again?")
-                confirm("Play again?")
-                alert("Game Over. Please reload the page.")
+                setTimeout(() => {
+                    confirm("Play again?")
+                }, "1 second")
                 return
             }
         }
