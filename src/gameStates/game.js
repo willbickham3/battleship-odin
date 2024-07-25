@@ -40,7 +40,7 @@ export default class Game {
             this.hideTheShips(this.player2)
             // this.player2.DOMboard.parentElement.prepend(this.player2.renderStatusBar())
         }
-
+        this.changeCursor()
         this.addPlacementListeners(this.player1)
         // this.addPlacementListeners(this.player2)
 }
@@ -63,6 +63,16 @@ export default class Game {
 
     }
 
+    changeCursor() {
+        this.opponent.DOMboard.style.cursor = "not-allowed"
+        if (this.phase == "Battle") {
+            this.currentPlayer.DOMboard.style.cursor = "crosshair"
+        }
+        else {
+            this.currentPlayer.DOMboard.style.cursor = "pointer"
+        }
+    }
+
     setShip(player, x, y) {
         let ships = player.board.getUnplacedShips()
 
@@ -83,10 +93,12 @@ export default class Game {
             this.phase = "Battle"
             this.changeTurn()
             if (this.player2.name !== 'computer'){
+                this.player2.DOMboard.style.cursor = "crosshair";
                 this.hideTheShips(this.currentPlayer)
                 this.hideTheShips(this.opponent)
                 setTimeout(() => {
                     alert("Game Start. Click Ok when ready.")
+                    this.currentPlayer.DOMboard.style.cursor = "crosshair";
                     console.log(this.currentPlayer)
                     this.removeEventListeners(this.currentPlayer)
                     console.log("Current Player: ", this.currentPlayer, "Opponent: ", this.opponent)
@@ -96,23 +108,7 @@ export default class Game {
                     this.showTheShips(this.opponent)
                     this.addPlacementListeners(this.currentPlayer)
                 }, "2 seconds")
-                // console.log(this.currentPlayer)
-                // this.removeEventListeners(this.currentPlayer)
-                // this.hideTheShips(this.currentPlayer)
-                // console.log("Current Player: ", this.currentPlayer, "Opponent: ", this.opponent)
-                // this.changeTurn()
-                // console.log("Current Player: ", this.currentPlayer, "Opponent: ", this.opponent)
-                // this.hideTheShips(this.currentPlayer)
-                // this.showTheShips(this.opponent)
-                // this.addPlacementListeners(this.currentPlayer)
                 return
-            // this.placementPauseForTwoPlayers()
-            // setTimeout(() => {
-            //     this.hideTheShips(this.currentPlayer)
-            //     this.changeTurn()
-            //     this.addPlacementListeners(this.currentPlayer)
-            //     this.showTheShips(this.opponent)
-            // }, "1 second")
             console.log(this.currentPlayer)
         }
             
@@ -121,6 +117,12 @@ export default class Game {
             this.placementPauseForTwoPlayers()
         }
         console.log("poggie")
+        this.opponent.DOMboard.style.cursor = "not-allowed";
+        if (this.phase == 'Battle') {
+            this.currentPlayer.DOMboard.style.cursor = 'crosshair'
+        }
+        else {
+        this.currentPlayer.DOMboard.style.cursor = "pointer"}
         this.addPlacementListeners(this.currentPlayer)  // currentPlayer is now pointing to the next ship
     }
 
@@ -208,6 +210,7 @@ export default class Game {
         else {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
+            this.changeCursor()
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             // if (this.player2.name !== 'computer') {
             //     this.placementPauseForTwoPlayers()
@@ -226,9 +229,12 @@ export default class Game {
             if (this.player2.name !== 'computer') {
                 // needs ground up build
                 this.battlePauseForTwoPlayers()
+                this.opponent.DOMboard.style.cursor = 'crosshair';
+                this.currentPlayer.DOMboard.style.cursor = 'not-allowed';
                 this.addPlacementListeners(this.opponent)
                 }
             else {
+                this.currentPlayer.DOMboard.style.cursor = 'crosshair'
                 this.changeTurn()
                 let enemyShip = null
                 let [x, y] = this.player2.board.computerAttack()
@@ -306,7 +312,7 @@ export default class Game {
             }}
         else {
             let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-            colorSquare.classList.add("shiny")
+            colorSquare.classList.add("attack")
         }
     }
 
@@ -323,7 +329,7 @@ export default class Game {
             }}
         else {
             let colorSquare = this.currentPlayer.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-            colorSquare.classList.remove("shiny")
+            colorSquare.classList.remove("attack")
         }
     }
 
