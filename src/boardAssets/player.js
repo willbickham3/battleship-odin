@@ -48,12 +48,26 @@ export default class Player {
     }
 
     updateDOM(x, y) {
-        let element = this.DOMboard.querySelector(`[x="${x}"][y="${y}"]`)
-        let ship = this.board
-        console.log(ship)
-        element.classList.add(`ship`)
-        element.classList.add(`${ship.name}`)
-        this.renderShipImagesOntoDom(element, ship)
+        let ship = this.board.gameBoard[x][y]
+        let shipLength = ship.length
+        let shipRotation = ship.rotation
+        let element = null
+        console.log("Update Dom ", ship)
+        for (let index = 0; index < shipLength; index++) {
+            if (!shipRotation) {
+                element = this.DOMboard.querySelector(`[x="${x}"][y="${y + index}"]`)
+                element.classList.add(`ship`)
+                element.classList.add(`${ship.name}`)
+                this.renderShipImagesOntoDom(element, ship)
+                
+            }
+            else {
+                element = this.DOMboard.querySelector(`[x="${x + index}"][y="${y}"]`)
+                element.classList.add(`ship`)
+                element.classList.add(`${ship.name}`)
+                this.renderShipImagesOntoDom(element, ship)
+            }
+        }
     }
 
     appendParentContainer(name) {
@@ -109,7 +123,8 @@ export default class Player {
             shipDiv.classList.add(`${ship.name}`)
             shipDiv.style.backgroundImage = `url(${shipsArray[x]})`
             shipDiv.style.backgroundRepeat = "no-repeat";
-            shipDiv.style.backgroundSize = "contain";
+            if (ship.name !== "PatrolBoat"){
+            shipDiv.style.backgroundSize = "contain";}
             shipDiv.style.backgroundPosition = "center";
             shipContainer.append(shipDiv)
             x += 1
@@ -118,13 +133,16 @@ export default class Player {
     }
 
     renderBoard() {
+        let t1 = performance.now()
         this.DOMboard = this.createBoard(this.board.gameBoard)
+        let t2 = performance.now()
         let gameContainer = document.querySelector(`.game-container.${this.name}`)
         let main = document.querySelector(".root")
         let ship = this.renderStatusBar()
         let shipContainer = document.querySelector('.statusBar')
 
         if (!gameContainer) {
+            this.DOMboard = this.createBoard(this.board.gameBoard)
             let parentContainer = this.appendParentContainer(this.name)
             parentContainer.append(ship, this.DOMboard)
             main.append(parentContainer)
@@ -141,6 +159,8 @@ export default class Player {
             // parentElement.removeChild(gameContainer)
             // shipParent.removeChild(shipContainer)
             parentElement.append(ship, this.DOMboard)
+            let t3 = performance.now()
+            console.log(t1, t2, t3)
         }
         // main.append(this.DOMboard)
     }
