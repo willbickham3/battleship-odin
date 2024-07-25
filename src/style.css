@@ -73,6 +73,11 @@ button:hover {
     width: 20%;
 }
 
+.statusBar .PatrolBoat {
+    width: 20%;
+    height: auto;
+}
+
 .statusBar {
     display: flex;
     height: 5em;
