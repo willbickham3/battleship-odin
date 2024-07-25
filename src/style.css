@@ -96,6 +96,10 @@ button:hover {
     background-color: pink;
 }
 
+.attack {
+    background-color: lightblue;
+}
+
 .root {
     height: 100%;
     width: auto;
