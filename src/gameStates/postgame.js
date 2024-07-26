@@ -14,10 +14,10 @@ export default class postGame {
         postGameScreen.classList.add('postGame')
         const newDiv = this.createDiv(`The winner is ${this.winner()}!`)
 
-        const player1shots = this.player1.board.shots.length
-        const player1miss = this.player1.board.miss
-        const player2shots = this.player2.board.shots.length
-        const player2miss = this.player2.board.miss
+        const player1shots = this.player2.board.shots.length
+        const player1miss = this.player2.board.miss
+        const player2shots = this.player1.board.shots.length
+        const player2miss = this.player1.board.miss
 
         const retryBtn = document.createElement('button');
         retryBtn.innerText = "Play Again"
@@ -25,7 +25,8 @@ export default class postGame {
             const restart = this.resetGame()
             restart.startGame()
         })
-
+        const btnContainer = document.createElement('div');
+        btnContainer.classList.add('buttonContainer')
         const returnBtn = document.createElement('button');
         returnBtn.innerText = "Return to Rules"
         returnBtn.addEventListener('click', () => {
@@ -49,12 +50,14 @@ export default class postGame {
 })
         })
         console.log(this.player1, this.player2)
-        const player1Acc = this.createDiv(`Player 1 shot ${player2shots} times and missed ${player2miss} times.`)
-        const player2Acc = this.createDiv(`Player 2 shot ${player1shots} times and missed ${player1miss} times.`)
+        btnContainer.append(retryBtn, returnBtn)
+
+        const player1Acc = this.createDiv(`Player 1 shot ${player1shots} times and missed ${player1miss} times.`)
+        const player2Acc = this.createDiv(`Player 2 shot ${player2shots} times and missed ${player2miss} times.`)
         while (main.firstChild) {
             main.removeChild(main.firstChild)
         }
-        postGameScreen.append(newDiv, player1Acc, player2Acc, retryBtn, returnBtn)
+        postGameScreen.append(newDiv, player1Acc, player2Acc, btnContainer)
         main.append(postGameScreen)
         return main
     }
