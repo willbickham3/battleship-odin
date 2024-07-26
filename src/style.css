@@ -131,4 +131,16 @@ button:hover {
     .statusBar {
         height: 3em;
     }
+
+    .welcomeScreen {
+        width: 90%;
     }
+    
+    .buttonContainer {
+        width: 90%;
+    }
+
+    .Player, .Computer {
+        font-size: 0.75em;
+    }
+}
