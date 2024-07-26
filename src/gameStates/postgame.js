@@ -48,9 +48,9 @@ export default class postGame {
     })
 })
         })
-
-        const player1Acc = this.createDiv(`Player 1 shot ${player1shots} times and missed ${player1miss} times.`)
-        const player2Acc = this.createDiv(`Player 2 shot ${player2shots} times and missed ${player2miss} times.`)
+        console.log(this.player1, this.player2)
+        const player1Acc = this.createDiv(`Player 1 shot ${player2shots} times and missed ${player2miss} times.`)
+        const player2Acc = this.createDiv(`Player 2 shot ${player1shots} times and missed ${player1miss} times.`)
         while (main.firstChild) {
             main.removeChild(main.firstChild)
         }
