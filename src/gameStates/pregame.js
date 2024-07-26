@@ -6,6 +6,7 @@ export default class GameRules{
     ruleContainer() {
         const main = this.main
         const rules = this.appendRuleSet()
+        console.log("append")
         main.append(rules)
 
     }
