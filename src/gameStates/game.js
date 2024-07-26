@@ -1,8 +1,7 @@
 import ComputerPlayer from "../computerLogic/computerPlayer.js";
 import Player from "../boardAssets/player.js";
 import cannon from "../audio/sounds/cannon_fire.wav"
-
-const cannonz = new Audio(cannon)
+import postGame from "./postgame.js";
 
 export default class Game {
     constructor(player1Name, player2Name) {
@@ -214,8 +213,8 @@ export default class Game {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
             this.changeCursor()
-            const cannoz = new Audio(cannon)
-            cannoz.play()
+            // const cannoz = new Audio(cannon)
+            // cannoz.play()
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             // if (this.player2.name !== 'computer') {
             //     this.placementPauseForTwoPlayers()
@@ -227,7 +226,10 @@ export default class Game {
                 this.removeEventListeners(this.player2)
                 console.log("play again?")
                 setTimeout(() => {
-                    confirm("Play again?")
+                    if (confirm("Play again?")) {
+                        const gameover = new postGame(this.player1, this.player2)
+                        console.log(gameover.createContainer())
+                    }
                 }, "1 second")
                 return
             }
@@ -263,7 +265,10 @@ export default class Game {
                 this.removeEventListeners(this.player2)
                 console.log("play again?")
                 setTimeout(() => {
-                    confirm("Play again?")
+                    if (confirm("Play again?")) {
+                        const gameover = new postGame(this.player1, this.player2)
+                        console.log(gameover.createContainer())
+                    }
                 }, "1 second")
                 return
             }
