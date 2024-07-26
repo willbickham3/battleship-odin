@@ -1,9 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
-    background-image: url("./images/ocean_background2.jpg");
+    /* background-image: url("./images/ocean_background2.jpg"); */
+    background-image: url("./images/pixil-frame-0.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -58,11 +63,13 @@ button:hover {
 
 .game-container {
     border: 2px solid rgb(255, 255, 255);
+    display: flex;
+    
 }
 
 .square {
-    width:  55px;
-    height: 55px;
+    width:  3em;
+    height: 3em;
     border: 1px solid rgb(255, 255, 255, 0.3);
     background-color: hsla(195, 53%, 79%, 0.3);
     
@@ -112,3 +119,16 @@ button:hover {
 .hit {
     background-color: pink;
 }
+
+@media (max-width: 1200px) {
+    .root:first-child, .root:nth-child(2) {
+        flex-direction: column;
+        }
+    .square {
+        width: 2em;
+        height: 2em;
+    }
+    .statusBar {
+        height: 3em;
+    }
+    }
