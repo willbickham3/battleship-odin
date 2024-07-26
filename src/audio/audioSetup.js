@@ -23,10 +23,9 @@ export default class AudioSetup {
         volumeSlider.setAttribute('type', "range")
         volumeSlider.setAttribute('min', "0")
         volumeSlider.setAttribute('max', "1")
-        volumeSlider.setAttribute('value', "50")
         volumeSlider.setAttribute('step', "0.01")
-        volumeSlider.setAttribute('value', "0.5")
-
+        volumeSlider.setAttribute('value', "0.15")
+        // this.audioFile.volume = 0.20;
         playBtn.addEventListener('click', () => {
             this.audioFile.play()
         })
@@ -37,7 +36,6 @@ export default class AudioSetup {
         volumeSlider.addEventListener('input', () => {
             this.audioFile.volume = volumeSlider.value
         })
-
 
         header.append(playBtn, pauseBtn, volumeSlider)
         header.append(this.audioFile)
