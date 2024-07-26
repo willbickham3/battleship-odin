@@ -11,9 +11,9 @@ import menuMusic from "./audio/pregameAudio.js";
 const pregame = new GameRules()
 pregame.ruleContainer()
 
-menuMusic.play()
 menuMusic.appendAudio()
-
+menuMusic.audioFile.volume = 0.20
+menuMusic.play()
 const player1    = new Player('player1')
 const compPlayer = new Player('computer')
 let startbutton = document.querySelectorAll('.welcomeScreen button');
