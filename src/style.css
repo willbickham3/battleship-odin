@@ -6,11 +6,22 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    height: 100%;
     width: 100%;
     /* background-image: url("./images/ocean_background2.jpg"); */
     background-image: url("./images/pixil-frame-0.png");
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    flex: 0 0 auto;
+}
+
+main {
+    flex: 1 0 auto
 }
 
 .game-container {
