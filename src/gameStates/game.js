@@ -213,8 +213,8 @@ export default class Game {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
             this.changeCursor()
-            // const cannoz = new Audio(cannon)
-            // cannoz.play()
+            const cannons = new Audio(cannon)
+            cannons.play()
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             // if (this.player2.name !== 'computer') {
             //     this.placementPauseForTwoPlayers()
