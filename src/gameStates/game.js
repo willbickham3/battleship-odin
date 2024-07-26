@@ -1,5 +1,8 @@
 import ComputerPlayer from "../computerLogic/computerPlayer.js";
 import Player from "../boardAssets/player.js";
+import cannon from "../audio/sounds/cannon_fire.wav"
+
+const cannonz = new Audio(cannon)
 
 export default class Game {
     constructor(player1Name, player2Name) {
@@ -211,6 +214,8 @@ export default class Game {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
             this.changeCursor()
+            const cannoz = new Audio(cannon)
+            cannoz.play()
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             // if (this.player2.name !== 'computer') {
             //     this.placementPauseForTwoPlayers()
