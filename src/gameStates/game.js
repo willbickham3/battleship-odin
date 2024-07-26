@@ -187,7 +187,7 @@ export default class Game {
             this.showTheShips(this.currentPlayer)
             this.changeTurn()
             
-        }, "1 second")
+        }, "1000")
     }
 
     clickEvent = (ev) => {
@@ -212,9 +212,9 @@ export default class Game {
         else {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
-            this.changeCursor()
             const cannons = new Audio(cannon)
             cannons.play()
+            this.changeCursor()
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             // if (this.player2.name !== 'computer') {
             //     this.placementPauseForTwoPlayers()
