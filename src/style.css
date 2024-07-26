@@ -22,7 +22,7 @@ body {
     display: flex;
 }
 
-.welcomeScreen {
+.welcomeScreen, .postGame {
     /* background-image: url("./images/ruleboard.jpg");
     background-size: contain;
     background-position: center;
