@@ -10,6 +10,7 @@ import Header from "./htmlAssets/header.js";
 
 // waves pregame music
 menuMusic.audioFile.setAttribute('id', 'menuMusic')
+menuMusic.audioFile.loop = true;
 
 
 // game
