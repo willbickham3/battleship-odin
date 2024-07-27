@@ -9,7 +9,7 @@ body {
     height: 100%;
     width: 100%;
     /* background-image: url("./images/ocean_background2.jpg"); */
-    background-image: url("./images/Sprite-0002.png");
+    background-image: url("./images/Sprite-0004.png");
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -116,8 +116,8 @@ button:hover {
 .square {
     width:  3em;
     height: 3em;
-    border: 1px solid rgb(255, 255, 255, 0.3);
-    background-color: hsla(195, 53%, 79%, 0.3);
+    border: 1px solid rgb(255, 255, 255, 0.5);
+    background-color: hsla(195, 53%, 79%, 0.8);
     
 }
 
