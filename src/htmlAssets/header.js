@@ -40,18 +40,22 @@ export default class Header {
         let labelWaves = this.createLabel('waves');
         labelWaves.innerText = 'Waves';
         let inputWaves = this.createInput('checkbox', 'waves', 'waves');
+
         inputWaves.addEventListener('input', () => {
             let waves = document.querySelector('#menuMusic');
             let volumeSlider = document.querySelector('#volume')
-            console.log(waves.getAttribute('prevVolume'), waves.volume == 0)
+            if (!waves.getAttribute('prevVolume')) {
+                waves.setAttribute('prevVolume', waves.volume)
+            }
+            let prevVolume = waves.getAttribute('prevVolume');
             if (waves.volume == 0) {
-                waves.volume = waves.getAttribute('prevVolume')
+                waves.volume = prevVolume;
+                volumeSlider.value = prevVolume;
             }
             else {
-                waves.setAttribute('prevVolume', waves.volume);
-                waves.volume = 0
+                waves.volume = 0;
+                volumeSlider.value = 0;
             }
-            volumeSlider.setAttribute('value', waves.volume)
         })
 
         dropDownContent.append(volumeSlider, inputVolume, labelSfx, inputSfx,
