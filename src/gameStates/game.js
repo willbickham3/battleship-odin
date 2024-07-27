@@ -1,5 +1,5 @@
 import ComputerPlayer from "../computerLogic/computerPlayer.js";
-import Player from "../boardAssets/player.js";
+import Player from "../gameLogic/player.js";
 import cannon from "../audio/sounds/cannon_fire.wav"
 import postGame from "./postgame.js";
 

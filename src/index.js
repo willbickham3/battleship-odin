@@ -3,7 +3,7 @@ import Game from "./gameStates/game.js";
 import './style.css';
 import _ from 'lodash';
 import ComputerPlayer from "./computerLogic/computerPlayer.js";
-import Player from "./boardAssets/player.js";
+import Player from "./gameLogic/player.js";
 import theme from "./audio/pregameAudio.js";
 import menuMusic from "./audio/pregameAudio.js";
 
