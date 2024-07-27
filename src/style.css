@@ -18,6 +18,21 @@ body {
 
 header, footer {
     flex: 0 0 auto;
+    background-color: antiquewhite;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+}
+
+.show {
+    display: block;
 }
 
 main {
