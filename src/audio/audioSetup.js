@@ -29,6 +29,8 @@ export default class AudioSetup {
         })
 
         volumeSlider.addEventListener('input', () => {
+            let menuMusic = document.querySelector('#menuMusic')
+            menuMusic.setAttribute('prevVolume', volumeSlider.value)
             this.audioFile.volume = volumeSlider.value
         })
 
