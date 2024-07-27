@@ -14,18 +14,12 @@ export default class AudioSetup {
     }
 
     appendAudio() {
-        const header = document.querySelector('header');
         const playBtn = this.musicButton('play');
         const pauseBtn = this.musicButton('pause');
 
-        const volumeSlider = document.createElement('input');
-        volumeSlider.classList.add('volume-slider')
-        volumeSlider.setAttribute('type', "range")
-        volumeSlider.setAttribute('min', "0")
-        volumeSlider.setAttribute('max', "1")
-        volumeSlider.setAttribute('step', "0.01")
-        volumeSlider.setAttribute('value', "0.15")
-        // this.audioFile.volume = 0.20;
+        const volumeSlider = document.querySelector('#volume');
+        volumeSlider.setAttribute("value", "0.20")
+        this.audioFile.volume = 0.20;
         playBtn.addEventListener('click', () => {
             this.audioFile.play()
         })
@@ -37,8 +31,9 @@ export default class AudioSetup {
             this.audioFile.volume = volumeSlider.value
         })
 
-        header.append(playBtn, pauseBtn, volumeSlider)
-        header.append(this.audioFile)
+        // header.append(playBtn, pauseBtn, volumeSlider)
+        // header.append(this.audioFile)
+        return [playBtn, pauseBtn]
     }
 
     audioContainer() {
