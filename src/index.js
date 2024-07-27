@@ -6,12 +6,23 @@ import ComputerPlayer from "./computerLogic/computerPlayer.js";
 import Player from "./gameLogic/player.js";
 import theme from "./audio/pregameAudio.js";
 import menuMusic from "./audio/pregameAudio.js";
+import Header from "./htmlAssets/header.js";
+
+// waves pregame music
+menuMusic.audioFile.setAttribute('id', 'menuMusic')
+
 
 // game
+const header = new Header();
+document.querySelector('header').append(header.createAudioDropdown());
+
+const [playBtn, pauseBtn] = menuMusic.appendAudio();
+document.querySelector('.dropdown-content').append(playBtn, pauseBtn, menuMusic.audioFile);
+
 const pregame = new GameRules()
 pregame.ruleContainer()
 
-menuMusic.appendAudio()
+
 menuMusic.audioFile.volume = 0.20
 menuMusic.play()
 const player1    = new Player('player1')
