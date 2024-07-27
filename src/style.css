@@ -19,6 +19,8 @@ body {
 header, footer {
     flex: 0 0 auto;
     background-color: antiquewhite;
+    margin: 0;
+    padding: 1%;
 }
 
 .dropdown {
@@ -29,6 +31,24 @@ header, footer {
 .dropdown-content {
     display: none;
     position: absolute;
+    background-color: burlywood;
+    border: 1px solid white;
+}
+
+.play {
+    background-image: url('./audio/svgs/play-button.svg');
+    background-position: center;
+    background-size: 70% 70%;
+    background-color: white;
+    background-repeat: no-repeat;
+}
+
+.pause {
+    background-image: url('./audio/svgs/pause-button.svg');
+    background-position: center;
+    background-size: 70% 70%;
+    background-color: white;
+    background-repeat: no-repeat;
 }
 
 .show {
