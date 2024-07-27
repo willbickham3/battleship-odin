@@ -212,8 +212,10 @@ export default class Game {
         else {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
-            const cannons = new Audio(cannon)
-            cannons.play()
+            if (!document.querySelector('#sfx').checked) {
+                const cannons = new Audio(cannon)
+                cannons.play()
+            }
             this.changeCursor()
             this.registerAttackOnDOM(this.currentPlayer, x, y)
             // if (this.player2.name !== 'computer') {
