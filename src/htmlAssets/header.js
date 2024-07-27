@@ -35,11 +35,13 @@ export default class Header {
         let labelSfx = this.createLabel('sfx');
         labelSfx.innerText = 'SFX';
         let inputSfx = this.createInput('checkbox', 'sfx', 'sfx', null);
+        inputSfx.checked = true;
 
         // menu music
         let labelWaves = this.createLabel('waves');
         labelWaves.innerText = 'Waves';
         let inputWaves = this.createInput('checkbox', 'waves', 'waves');
+        inputWaves.checked = true;
 
         inputWaves.addEventListener('input', () => {
             let waves = document.querySelector('#menuMusic');
