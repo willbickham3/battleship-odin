@@ -20,6 +20,7 @@ export default class AudioSetup {
         const volumeSlider = document.querySelector('#volume');
         volumeSlider.setAttribute("value", "0.20")
         this.audioFile.volume = 0.20;
+
         playBtn.addEventListener('click', () => {
             this.audioFile.play()
         })
