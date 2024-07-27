@@ -174,7 +174,7 @@ export default class Game {
                 alert("Pass the screen!")
                 this.placement_orientation = "vertical"
                 this.showTheShips(this.currentPlayer)
-            }, "1 second")
+            }, "1000")
         }
     }
 
@@ -212,7 +212,7 @@ export default class Game {
         else {
             if (!this.checkIfValidShot(x, y)) {console.log("BadSHOT");
                 return}
-            if (!document.querySelector('#sfx').checked) {
+            if (document.querySelector('#sfx').checked) {
                 const cannons = new Audio(cannon)
                 cannons.play()
             }
@@ -232,7 +232,7 @@ export default class Game {
                         const gameover = new postGame(this.player1, this.player2)
                         console.log(gameover.createContainer())
                     }
-                }, "1 second")
+                }, "1000")
                 return
             }
             if (this.player2.name !== 'computer') {
@@ -271,7 +271,7 @@ export default class Game {
                         const gameover = new postGame(this.player1, this.player2)
                         console.log(gameover.createContainer())
                     }
-                }, "1 second")
+                }, "1000")
                 return
             }
         }
