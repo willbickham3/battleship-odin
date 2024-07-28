@@ -217,8 +217,12 @@ button:hover {
         width: auto;
     }
 
-    .welcomeScreen {
+    .welcomeScreen, .postGame {
         width: 90%;
+    }
+
+    .postGame {
+        height: 15em;
     }
     
     .buttonContainer {
