@@ -249,8 +249,9 @@ export default class Game {
                 let [x, y] = this.player2.board.computerAttack()
                 if (this.registerAttackOnDOM(this.player1, x, y)) {
                     enemyShip = this.player1.board.gameBoard[x][y]
-                    console.log(enemyShip)
-                    this.player2.board.setPrevAttackAndPrevHit(enemyShip, x, y)
+                    console.log("enemy ship", enemyShip)
+                    if (enemyShip[0] !== null){
+                    this.player2.board.setPrevAttackAndPrevHit(enemyShip, x, y)}
                 }
                 else {
                     console.log(enemyShip)
