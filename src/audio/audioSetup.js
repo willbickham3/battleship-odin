@@ -21,6 +21,9 @@ export default class AudioSetup {
         volumeSlider.setAttribute("value", "0.20")
         this.audioFile.volume = 0.20;
 
+        let btnContainer = document.createElement('div');
+        btnContainer.classList.add('soundBtnContainer');
+
         playBtn.addEventListener('click', () => {
             this.audioFile.play()
         })
@@ -33,10 +36,11 @@ export default class AudioSetup {
             menuMusic.setAttribute('prevVolume', volumeSlider.value)
             this.audioFile.volume = volumeSlider.value
         })
-
+        
+        btnContainer.append(playBtn, pauseBtn)
         // header.append(playBtn, pauseBtn, volumeSlider)
         // header.append(this.audioFile)
-        return [playBtn, pauseBtn]
+        return btnContainer
     }
 
     audioContainer() {
