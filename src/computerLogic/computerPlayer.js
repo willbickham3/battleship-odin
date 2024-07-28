@@ -1,3 +1,4 @@
+import { random } from "lodash";
 import GameBoard from "../gameLogic/gameboard";
 
 export default class ComputerPlayer extends GameBoard {
@@ -12,7 +13,8 @@ export default class ComputerPlayer extends GameBoard {
             [-1, 0],
             [0, 1],
             [0, -1]
-        ]
+        ];
+        // this.attackMatrixCount = 0
         this.enemyRotation = null;
     }
 
@@ -25,6 +27,7 @@ export default class ComputerPlayer extends GameBoard {
     computerAttack() {
         // let hitBool        = this.prevAttackBool
         let hitCoordinates = this.prevHit
+        console.log(this.prevHit)
         // let prevHitCoordinates = this.prevHitShip[1]
         
         let x = null;
@@ -39,19 +42,41 @@ export default class ComputerPlayer extends GameBoard {
         }
 
         if (this.prevAttackBool) {
-            console.log(this.prevHitShip)
-            console.log(hitCoordinates)
-            if (!this.prevHitShip.rotation) {
-                x = hitCoordinates[0];
-                y = hitCoordinates[1] + 1;
-                while (!this.checkValidityOfAttack(x, y)) {
-                    y -= 1
-                }}
+            if (this.prevHitShip.hits == 1) {
+                [x, y] = this.humanLikeReflexes();
+            }
             else {
-                x = hitCoordinates[0] + 1;
-                y = hitCoordinates[1];
-                while (!this.checkValidityOfAttack(x, y)) {
-                    x -= 1
+                let player1board = document.querySelector('.player1')
+                let board = player1board.querySelector('.player1')
+                console.log('player1board::::::', board)
+                console.log(hitCoordinates)
+                console.log(board.querySelector(`[x="${hitCoordinates[0]}"][y="${hitCoordinates[1]}"]`))
+                if (!this.prevHitShip.rotation) {
+                    x = hitCoordinates[0];
+                    y = hitCoordinates[1] + 1;
+                    while (!this.checkValidityOfAttack(x, y)) {
+                        let previousHit = board.querySelector(`[x="${hitCoordinates[0]}"][y="${hitCoordinates[1]}"]`).classList.contains('ship')
+                        let currentHit = board.querySelector(`[x="${hitCoordinates[0]}"][y="${hitCoordinates[1] - 1}"]`).classList.contains('ship')
+                        if (previousHit && !currentHit) {
+                            y += 1
+                        }
+                        else {
+                            y -= 1
+                        }
+                    }}
+                else {
+                    x = hitCoordinates[0] + 1;
+                    y = hitCoordinates[1];
+                    while (!this.checkValidityOfAttack(x, y)) {
+                        let previousHit = board.querySelector(`[x="${hitCoordinates[0]}"][y="${hitCoordinates[1]}"]`).classList.contains('ship')
+                        let currentHit = board.querySelector(`[x="${hitCoordinates[0] - 1}"][y="${hitCoordinates[1]}"]`).classList.contains('ship')
+                        if (previousHit && !currentHit) {
+                            x += 1
+                        }
+                        else {
+                            x -= 1
+                        }
+                    }
                 }
             }
         }
@@ -72,6 +97,38 @@ export default class ComputerPlayer extends GameBoard {
         else {
             return false
         }
+    }
+
+    humanLikeReflexes() {
+        let x = this.prevHit[0];
+        let y = this.prevHit[1];
+        console.log("------------------")
+        console.log(x, y)
+        let attackSequence = this.attackMatrix.map(array => [...array]);
+        for (let array of attackSequence) {
+            console.log(array)
+            array[0] += x
+            array[1] += y
+        }
+        let randomSelection = Math.floor(Math.random() * attackSequence.length)
+        let randomArray = attackSequence[randomSelection]
+        x = randomArray[0];
+        y = randomArray[1];
+        let z = 0
+        while (x < 0 || x > 9 || y < 0 || y > 9 || !this.checkValidityOfAttack(x, y) || z == 5) {
+            attackSequence.splice(randomSelection, 1);
+            console.log(attackSequence);
+            randomSelection = Math.floor(Math.random() * attackSequence.length)
+            randomArray = attackSequence[randomSelection];
+            console.log(randomArray)
+            x = randomArray[0];
+            y = randomArray[1];
+            z += 1
+        }
+        console.log("random number: ", randomSelection, randomArray)
+        console.log(attackSequence)
+        console.log("------------------")
+        return [x, y]
     }
 
     getRotationStatus() {
