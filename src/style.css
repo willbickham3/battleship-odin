@@ -173,12 +173,39 @@ button:hover {
     .root:first-child, .root:nth-child(2) {
         flex-direction: column;
         }
+
+    .player1 {
+        display: flex;
+    }
+
+    .computer {
+        display: flex;
+    }
+
     .square {
         width: 2em;
         height: 2em;
     }
     .statusBar {
-        height: 3em;
+        width: 3em;
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, 1fr);
+        border-right: 1px solid black;
+    }
+
+    .statusBar > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-size: contain;
+        width: auto;
+        border-bottom: 1px solid black;
+    }
+
+    .statusBar .PatrolBoat {
+        width: auto;
     }
 
     .welcomeScreen {
