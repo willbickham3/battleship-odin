@@ -14,6 +14,13 @@ export default class Header {
         let dropDownContent = document.createElement('div');
         dropDownContent.setAttribute('id', 'myDropdown');
         dropDownContent.classList.add('dropdown-content');
+
+        let volumeContainer = document.createElement('div');
+        volumeContainer.classList.add('VolumeContainer');
+
+        let toggleContainer = document.createElement('div');
+        toggleContainer.classList.add('toggleContainer');
+
         let soundBtn = this.createDropDownBtn();
         soundBtn.addEventListener('click', () => {
             if (dropDownContent.classList.contains('show')) {
@@ -31,6 +38,8 @@ export default class Header {
         let inputVolume = this.createInput('range', 'volume', 'volume', '0.2', '0', '1');
         inputVolume.setAttribute('step', "0.01");
 
+        volumeContainer.append(volumeSlider, inputVolume)
+
         // game SFX
         let labelSfx = this.createLabel('sfx');
         labelSfx.innerText = 'SFX';
@@ -42,6 +51,8 @@ export default class Header {
         labelWaves.innerText = 'Waves';
         let inputWaves = this.createInput('checkbox', 'waves', 'waves');
         inputWaves.checked = true;
+
+        toggleContainer.append(labelSfx, inputSfx, labelWaves, inputWaves)
 
         inputWaves.addEventListener('input', () => {
             let waves = document.querySelector('#menuMusic');
@@ -60,8 +71,7 @@ export default class Header {
             }
         })
 
-        dropDownContent.append(volumeSlider, inputVolume, labelSfx, inputSfx,
-            labelWaves, inputWaves)
+        dropDownContent.append(volumeContainer, toggleContainer)
         dropDownContainer.append(soundBtn, dropDownContent)
         return dropDownContainer
         
