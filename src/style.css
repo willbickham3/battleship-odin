@@ -33,6 +33,15 @@ header, footer {
     position: absolute;
     background-color: burlywood;
     border: 1px solid white;
+    min-width: 250px;
+    min-height: fit-content;
+    border-radius: 5px;
+}
+
+.dropdown-content > div {
+    padding: 10px 10px;
+    display: flex;
+    gap: 5px;
 }
 
 .play {
