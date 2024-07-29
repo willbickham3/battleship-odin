@@ -7,11 +7,6 @@ export default class Header {
         return header
     }
 
-    createH1(text) {
-        const h1 = document.createElement('h1');
-        h1.innerText = text
-    }
-
     createSettingsDropdown() {
         let dropDownContainer = this.createDropDownContainer();
         let dropDownContent = document.createElement('div');
