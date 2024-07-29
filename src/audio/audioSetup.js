@@ -32,9 +32,18 @@ export default class AudioSetup {
         })
 
         volumeSlider.addEventListener('input', () => {
-            let menuMusic = document.querySelector('#menuMusic')
-            menuMusic.setAttribute('prevVolume', volumeSlider.value)
-            this.audioFile.volume = volumeSlider.value
+            let musicFiles = document.querySelectorAll('audio');
+            for (const sound of musicFiles) {
+                if (!sound.paused) {
+                    sound.setAttribute('prevVolume', volumeSlider.value)
+                    sound.volume = volumeSlider.value
+                }
+                else {
+                    sound.setAttribute('prevVolume', volumeSlider.value)
+                }
+            }
+            // sound.setAttribute('prevVolume', volumeSlider.value)
+            // this.audioFile.volume = volumeSlider.value
         })
         
         btnContainer.append(playBtn, pauseBtn)
