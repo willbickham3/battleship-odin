@@ -105,6 +105,7 @@ export default class ComputerPlayer extends GameBoard {
         console.log("------------------")
         console.log(x, y)
         let attackSequence = this.attackMatrix.map(array => [...array]);
+        if (attackSequence.length == 0) {return}
         for (let array of attackSequence) {
             console.log(array)
             array[0] += x
