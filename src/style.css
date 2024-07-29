@@ -252,6 +252,10 @@ button:hover {
 }
 
 @media (max-width: 1200px) {
+    .root {
+        gap: 10px;
+    }
+
     .root:first-child, .root:nth-child(2) {
         flex-direction: column;
         }
@@ -265,8 +269,8 @@ button:hover {
     }
 
     .square {
-        width: 2em;
-        height: 2em;
+        width: 1.8em;
+        height: 1.8em;
     }
     .statusBar {
         width: 3em;
