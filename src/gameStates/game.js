@@ -2,6 +2,7 @@ import ComputerPlayer from "../computerLogic/computerPlayer.js";
 import Player from "../gameLogic/player.js";
 import cannon from "../audio/sounds/cannon_fire.wav"
 import postGame from "./postgame.js";
+import renderButton from "../htmlAssets/renderButton.js";
 
 export default class Game {
     constructor(player1Name, player2Name) {
@@ -32,6 +33,7 @@ export default class Game {
     startGame() {
 
         this.player1.renderBoard()
+        this.rotateShipsButton()
         this.player2.renderBoard()
 
         if (this.player2.name == 'computer') {
@@ -73,6 +75,16 @@ export default class Game {
         else {
             this.currentPlayer.DOMboard.style.cursor = "pointer"
         }
+    }
+
+    rotateShipsButton() {
+        let rotateBtn = renderButton();
+        rotateBtn.classList.add("rotateButton");
+        rotateBtn.innerText = "Rotate Ships";
+        rotateBtn.addEventListener('click', () => {
+            this.placement_orientation = this.placement_orientation === 'vertical' ? 'horizontal' : 'vertical'
+        })
+        document.querySelector('main').append(rotateBtn);
     }
 
     setShip(player, x, y) {
@@ -125,6 +137,7 @@ export default class Game {
         }
         else {
         this.currentPlayer.DOMboard.style.cursor = "pointer"}
+
         this.addPlacementListeners(this.currentPlayer)  // currentPlayer is now pointing to the next ship
     }
 
@@ -174,7 +187,7 @@ export default class Game {
                 alert("Pass the screen!")
                 this.placement_orientation = "vertical"
                 this.showTheShips(this.currentPlayer)
-            }, "1000")
+            }, "300")
         }
     }
 
