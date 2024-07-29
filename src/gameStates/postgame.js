@@ -12,13 +12,69 @@ export default class postGame {
         const main = document.querySelector('main');
         const postGameScreen = document.createElement('section');
         postGameScreen.classList.add('postGame')
-        const newDiv = this.createDiv(`The winner is ${this.winner()}!`)
+        const postGameSummary = document.createElement('h2');
+        postGameSummary.classList.add('postGameSummary');
+        postGameSummary.innerText = `The winner is ${this.winner()}!`
 
-        const player1shots = this.player2.board.shots.length
-        const player1miss = this.player2.board.miss
-        const player2shots = this.player1.board.shots.length
-        const player2miss = this.player1.board.miss
+        const scoreboardContainer = document.createElement('section');
+        scoreboardContainer.classList.add('scoreboardContainer');
+        let player1Scoreboard = this.createScoreBoard(this.player1)
+        let player2Scoreboard = this.createScoreBoard(this.player2)
+        let postGameButtons = this.postGameButtons()
 
+        scoreboardContainer.append(player1Scoreboard, player2Scoreboard);
+        
+        while (main.firstChild) {
+            main.removeChild(main.firstChild)
+        }
+        postGameScreen.append(postGameSummary, scoreboardContainer, postGameButtons)
+        main.append(postGameScreen)
+        return main
+    }
+
+    createScoreBoard(player) {
+        const playerHeader = document.createElement('h3');
+        playerHeader.classList.add(`${player.name}`);
+        playerHeader.classList.add('stats');
+
+        let opponent = null;
+        let playerName = null;
+        if (player == this.player1) {
+            playerName = 'Player 1'
+            opponent = this.player2
+        }
+        else {
+            if (this.player2.name = 'computer') {
+                playerName = 'Computer'
+            }
+            else {
+                playerName = 'Player 2'
+            }
+            opponent = this.player1
+        }
+
+        playerHeader.innerText = `${playerName} Stats`
+        const shots = opponent.board.shots.length;
+        const misses = opponent.board.missedShots.length;
+
+        const playerScoreboard = document.createElement('section');
+        playerScoreboard.classList.add(`scoreboard`);
+        playerScoreboard.classList.add(`${player.name}`)
+
+        const playerShots = document.createElement('div');
+        playerShots.classList.add('attackSummary');
+        playerShots.innerText = `${playerName} shot ${shots} times and missed ${misses} times!`;
+
+        const playerAccuracy = `${Math.floor((player.board.missedShots.length / player.board.shots.length) * 100)}%`;
+        const accuracyMessage = `${playerName} Accuracy : ${playerAccuracy}`;
+        const accuracyDiv = document.createElement('div');
+        accuracyDiv.innerText = accuracyMessage
+
+        playerScoreboard.append(playerHeader, playerShots, accuracyDiv)
+        return playerScoreboard
+    }
+
+    postGameButtons() {
         const retryBtn = document.createElement('button');
         retryBtn.innerText = "Play Again"
         retryBtn.addEventListener('click', () => {
@@ -37,29 +93,15 @@ export default class postGame {
             let player = null;
             startbutton.forEach((button) => {
                 button.addEventListener('click', () => {
-                    if (button.classList.contains("Computer")) {
-                        player = "computer"
-                    }
-                    else {
-                        player = "player2"
-                    }
+                    player = player.name
                     preGame.removeRuleSet()
                     const game = new Game("player1", `${player}`);
                     game.startGame()
-    })
-})
+                })
+            })
         })
-        console.log(this.player1, this.player2)
         btnContainer.append(retryBtn, returnBtn)
-
-        const player1Acc = this.createDiv(`Player 1 shot ${player1shots} times and missed ${player1miss} times.`)
-        const player2Acc = this.createDiv(`Player 2 shot ${player2shots} times and missed ${player2miss} times.`)
-        while (main.firstChild) {
-            main.removeChild(main.firstChild)
-        }
-        postGameScreen.append(newDiv, player1Acc, player2Acc, btnContainer)
-        main.append(postGameScreen)
-        return main
+        return btnContainer
     }
 
     winner() {
