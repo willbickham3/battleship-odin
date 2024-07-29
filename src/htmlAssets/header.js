@@ -9,20 +9,14 @@ export default class Header {
         h1.innerText = text
     }
 
-    createAudioDropdown() {
+    createSettingsDropdown() {
         let dropDownContainer = this.createDropDownContainer();
         let dropDownContent = document.createElement('div');
         dropDownContent.setAttribute('id', 'myDropdown');
         dropDownContent.classList.add('dropdown-content');
-
-        let volumeContainer = document.createElement('div');
-        volumeContainer.classList.add('VolumeContainer');
-
-        let toggleContainer = document.createElement('div');
-        toggleContainer.classList.add('toggleContainer');
-
-        let soundBtn = this.createDropDownBtn();
-        soundBtn.addEventListener('click', () => {
+        
+        let settingsBtn = this.createDropDownBtn();
+        settingsBtn.addEventListener('click', () => {
             if (dropDownContent.classList.contains('show')) {
                 dropDownContent.classList.remove('show');
             }
@@ -30,49 +24,11 @@ export default class Header {
                 dropDownContent.classList.add('show');
             }
         })
+
         
 
-        // volume slider
-        let volumeSlider = this.createLabel('volume');
-        volumeSlider.innerText = 'Volume';
-        let inputVolume = this.createInput('range', 'volume', 'volume', '0.2', '0', '1');
-        inputVolume.setAttribute('step', "0.01");
-
-        volumeContainer.append(volumeSlider, inputVolume)
-
-        // game SFX
-        let labelSfx = this.createLabel('sfx');
-        labelSfx.innerText = 'SFX';
-        let inputSfx = this.createInput('checkbox', 'sfx', 'sfx', null);
-        inputSfx.checked = true;
-
-        // menu music
-        let labelWaves = this.createLabel('waves');
-        labelWaves.innerText = 'Waves';
-        let inputWaves = this.createInput('checkbox', 'waves', 'waves');
-        inputWaves.checked = true;
-
-        toggleContainer.append(labelSfx, inputSfx, labelWaves, inputWaves)
-
-        inputWaves.addEventListener('input', () => {
-            let waves = document.querySelector('#menuMusic');
-            let volumeSlider = document.querySelector('#volume')
-            if (!waves.getAttribute('prevVolume')) {
-                waves.setAttribute('prevVolume', waves.volume)
-            }
-            let prevVolume = waves.getAttribute('prevVolume');
-            if (waves.volume == 0) {
-                waves.volume = prevVolume;
-                volumeSlider.value = prevVolume;
-            }
-            else {
-                waves.volume = 0;
-                volumeSlider.value = 0;
-            }
-        })
-
-        dropDownContent.append(volumeContainer, toggleContainer)
-        dropDownContainer.append(soundBtn, dropDownContent)
+        dropDownContent.append(this.soundSettings())
+        dropDownContainer.append(settingsBtn, dropDownContent)
         return dropDownContainer
         
     }
@@ -104,8 +60,74 @@ export default class Header {
 
     createDropDownBtn() {
         const btn = document.createElement('button');
-        btn.innerText = 'Sound Settings';
-        btn.classList.add('AudioSettings')
+        btn.innerText = 'Settings';
+        btn.classList.add('Settings')
         return btn
     }
+
+    volumeSlider() {
+        // volume slider
+        let volumeContainer = document.createElement('div');
+        volumeContainer.classList.add('VolumeContainer');
+        let volumeSlider = this.createLabel('volume');
+        volumeSlider.innerText = 'Volume';
+        let inputVolume = this.createInput('range', 'volume', 'volume', '0.2', '0', '1');
+        inputVolume.setAttribute('step', "0.01");
+
+        volumeContainer.append(volumeSlider, inputVolume)
+
+        return volumeContainer
+    }
+
+    soundSettings() {
+        let toggleContainer = document.createElement('div');
+        toggleContainer.classList.add('toggleContainer');        
+
+        const sfx = this.SFXInput()
+        const waves = this.wavesInput()
+        toggleContainer.append(sfx.labelSfx, sfx.inputSfx, waves.labelWaves, waves.inputWaves);
+
+        let soundSettings = document.createElement('div');
+        soundSettings.classList.add('soundSettings');
+        soundSettings.innerHTML = `<b>Sound Settings</b>`;
+        soundSettings.append(this.volumeSlider(), toggleContainer)
+        return soundSettings
+    }
+
+    SFXInput() {
+         // game SFX
+         let labelSfx = this.createLabel('sfx');
+         labelSfx.innerText = 'SFX';
+         let inputSfx = this.createInput('checkbox', 'sfx', 'sfx', null);
+         inputSfx.checked = true;
+         return { labelSfx, inputSfx }
+    }
+
+    wavesInput() {
+        let labelWaves = this.createLabel('waves');
+        labelWaves.innerText = 'Waves';
+        let inputWaves = this.createInput('checkbox', 'waves', 'waves');
+        inputWaves.checked = true;
+
+        inputWaves.addEventListener('input', () => {
+            let waves = document.querySelector('#menuMusic');
+            let volumeSlider = document.querySelector('#volume')
+            if (!waves.getAttribute('prevVolume')) {
+                waves.setAttribute('prevVolume', waves.volume)
+            }
+            let prevVolume = waves.getAttribute('prevVolume');
+            if (waves.volume == 0) {
+                waves.volume = prevVolume;
+                volumeSlider.value = prevVolume;
+            }
+            else {
+                waves.volume = 0;
+                volumeSlider.value = 0;
+            }
+        })
+
+        return {labelWaves, inputWaves}
+    }
+
+    playAndPauseButtons() {}
 }
