@@ -320,6 +320,10 @@ button:hover {
         font-size: 1em;
         margin-bottom: 2%;
     }
+
+    .postGame button {
+        font-size: 1em;
+    }
     
     .buttonContainer {
         width: 90%;
