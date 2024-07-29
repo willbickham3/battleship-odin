@@ -4,13 +4,20 @@ import './style.css';
 import _ from 'lodash';
 import ComputerPlayer from "./computerLogic/computerPlayer.js";
 import Player from "./gameLogic/player.js";
-import theme from "./audio/pregameAudio.js";
-import menuMusic from "./audio/pregameAudio.js";
 import Header from "./htmlAssets/header.js";
+import AudioSetup from "./audio/audioSetup.js";
+import stormSound from './audio/sounds/storm.mp3'
+import wavesSound from './audio/sounds/waves.wav'
 
 // waves pregame music
+const menuMusic = new AudioSetup(wavesSound)
+const stormAudio = new AudioSetup(stormSound)
+
 menuMusic.audioFile.setAttribute('id', 'menuMusic')
 menuMusic.audioFile.loop = true;
+
+stormAudio.audioFile.setAttribute('id', 'stormAudio')
+stormAudio.audioFile.loop = true;
 
 
 // game
@@ -18,7 +25,7 @@ const header = new Header();
 document.querySelector('header').append(header.createSettingsDropdown());
 
 const soundBtnContainer = menuMusic.appendAudio();
-document.querySelector('.soundSettings').append(soundBtnContainer, menuMusic.audioFile);
+document.querySelector('.soundSettings').append(soundBtnContainer, menuMusic.audioFile, stormAudio.audioFile);
 
 const pregame = new GameRules()
 pregame.ruleContainer()
