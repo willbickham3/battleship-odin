@@ -1,6 +1,7 @@
 function createH1(text) {
     const h1 = document.createElement('h1');
     h1.innerText = text
+    return h1
 }
 
 function createDiv(className) {
