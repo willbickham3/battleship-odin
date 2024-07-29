@@ -72,7 +72,7 @@ export default class Weather {
 
         const animStormContainer = createDiv('stormContainer');
         const staticStormContainer = createDiv('staticStormContainer');
-        stormContainer.append(stormLabel, stormInput)
+        animStormContainer.append(stormLabel, stormInput)
         staticStormContainer.append(staticStormLabel, staticStormInput)
 
         stormContainer.append(animStormContainer, staticStormContainer)
