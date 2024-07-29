@@ -1,3 +1,6 @@
+import { createH1, createDiv, createInput, createLabel } from "./util";
+import Weather from "./weatherChange";
+
 export default class Header {
     createHeader() {
         const header = document.createElement('header');
@@ -14,7 +17,7 @@ export default class Header {
         let dropDownContent = document.createElement('div');
         dropDownContent.setAttribute('id', 'myDropdown');
         dropDownContent.classList.add('dropdown-content');
-        
+
         let settingsBtn = this.createDropDownBtn();
         settingsBtn.addEventListener('click', () => {
             if (dropDownContent.classList.contains('show')) {
@@ -25,9 +28,9 @@ export default class Header {
             }
         })
 
-        
+        let weatherSettings = new Weather()
 
-        dropDownContent.append(this.soundSettings())
+        dropDownContent.append(this.soundSettings(), weatherSettings.createWeatherOptions())
         dropDownContainer.append(settingsBtn, dropDownContent)
         return dropDownContainer
         
@@ -69,9 +72,9 @@ export default class Header {
         // volume slider
         let volumeContainer = document.createElement('div');
         volumeContainer.classList.add('VolumeContainer');
-        let volumeSlider = this.createLabel('volume');
+        let volumeSlider = createLabel('volume');
         volumeSlider.innerText = 'Volume';
-        let inputVolume = this.createInput('range', 'volume', 'volume', '0.2', '0', '1');
+        let inputVolume = createInput('range', 'volume', 'volume', '0.2', '0', '1');
         inputVolume.setAttribute('step', "0.01");
 
         volumeContainer.append(volumeSlider, inputVolume)
@@ -85,7 +88,7 @@ export default class Header {
 
         const sfx = this.SFXInput()
         const waves = this.wavesInput()
-        toggleContainer.append(sfx.labelSfx, sfx.inputSfx, waves.labelWaves, waves.inputWaves);
+        toggleContainer.append(sfx, waves);
 
         let soundSettings = document.createElement('div');
         soundSettings.classList.add('soundSettings');
@@ -96,17 +99,20 @@ export default class Header {
 
     SFXInput() {
          // game SFX
-         let labelSfx = this.createLabel('sfx');
+         let labelSfx = createLabel('sfx');
          labelSfx.innerText = 'SFX';
-         let inputSfx = this.createInput('checkbox', 'sfx', 'sfx', null);
+         let inputSfx = createInput('checkbox', 'sfx', 'sfx', null);
          inputSfx.checked = true;
-         return { labelSfx, inputSfx }
+
+         let sfxContainer = createDiv('sfx');
+         sfxContainer.append(labelSfx, inputSfx)
+         return sfxContainer
     }
 
     wavesInput() {
-        let labelWaves = this.createLabel('waves');
+        let labelWaves = createLabel('waves');
         labelWaves.innerText = 'Waves';
-        let inputWaves = this.createInput('checkbox', 'waves', 'waves');
+        let inputWaves = createInput('checkbox', 'waves', 'waves');
         inputWaves.checked = true;
 
         inputWaves.addEventListener('input', () => {
@@ -126,7 +132,10 @@ export default class Header {
             }
         })
 
-        return {labelWaves, inputWaves}
+        const wavesContainer = createDiv('waves');
+        wavesContainer.append(labelWaves, inputWaves)
+
+        return wavesContainer
     }
 
     playAndPauseButtons() {}
