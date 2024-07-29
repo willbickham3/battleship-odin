@@ -1,20 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Lumanosimo&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Roboto&display=swap');
+
+@font-face {
+    font-family: 'Shipwreck';
+    src: url('./fonts/Shipwreck.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
+    font-family: 'Monteserrat', sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
     height: 100%;
     width: 100%;
-    /* background-image: url("./images/ocean_background2.jpg"); */
     background-image: url("./images/Sprite-0004.png");
-    /* background-image: url("./images/Rain-\(animated\).gif"); */
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
     flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Shipwreck', serif;
 }
 
 header, footer {
@@ -27,6 +39,8 @@ header, footer {
 .dropdown {
     position: relative;
     display: inline-block;
+    align-self: center;
+    font-size: 1.2em;
 }
 
 .dropdown-content {
@@ -46,6 +60,27 @@ header, footer {
     gap: 5px;
 }
 
+.volumeContainer {
+    display: flex;
+    gap: 2.5%;
+}
+
+.toggleContainer {
+    display: flex;
+    gap: 7.5%;
+}
+
+.toggleContainer > div {
+    display: flex;
+    gap: 10%;
+}
+
+.stormSettings {
+    display: flex;
+    align-items: center;
+    gap: 7.5%;
+}
+
 .play {
     background-image: url('./audio/svgs/play-button.svg');
     background-position: center;
@@ -60,6 +95,11 @@ header, footer {
     background-size: 70% 70%;
     background-color: white;
     background-repeat: no-repeat;
+}
+
+.soundBtnContainer {
+    display: flex;
+    gap: 5%;
 }
 
 .show {
