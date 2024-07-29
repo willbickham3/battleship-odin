@@ -15,10 +15,10 @@ menuMusic.audioFile.loop = true;
 
 // game
 const header = new Header();
-document.querySelector('header').append(header.createAudioDropdown());
+document.querySelector('header').append(header.createSettingsDropdown());
 
 const soundBtnContainer = menuMusic.appendAudio();
-document.querySelector('.dropdown-content').append(soundBtnContainer, menuMusic.audioFile);
+document.querySelector('.soundSettings').append(soundBtnContainer, menuMusic.audioFile);
 
 const pregame = new GameRules()
 pregame.ruleContainer()
