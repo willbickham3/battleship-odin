@@ -1,11 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lumanosimo&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lumanosimo&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pacifico&family=Roboto&family=Russo+One&display=swap');
 
-@font-face {
-    font-family: 'Shipwreck';
-    src: url('./fonts/Shipwreck.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 * {
     box-sizing: border-box;
@@ -26,7 +22,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Shipwreck', serif;
+    font-family: "Russo One", sans-serif;
+    font-weight: 500;
 }
 
 header, footer {
@@ -106,6 +103,12 @@ h3 {
     gap: 5%;
 }
 
+.stormSettings {
+    display: flex;
+    align-items: center;
+    gap: 2.5%;
+}
+
 .show {
     display: block;
 }
@@ -120,7 +123,7 @@ main {
 
 .buttonContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 50%;
 }
 
@@ -144,10 +147,28 @@ main {
     align-items: center;
 }
 
+.postGame {
+    width: 45%;
+}
+
 .scoreboardContainer {
     display: flex;
+    flex-direction: column;
     gap: 1%;
     margin-bottom: 2%;
+}
+
+.scoreboardContainer section {
+    margin-bottom: 3%;
+}
+
+.postGame h3 {
+    margin-bottom: 2%;
+}
+
+.computer .stats {
+    display: flex;
+    justify-content: flex-start;
 }
 
 article p {
@@ -274,7 +295,26 @@ button:hover {
     }
 
     .postGame {
-        height: 15em;
+        height: fit-content;
+    }
+
+    .scoreboardContainer {
+        flex-direction: column;
+        gap: 2.5%;
+    }
+
+    .scoreboardContainer > section {
+        flex-direction: column;
+        margin-bottom: 3%;
+    }
+
+    .postGame h2 {
+        font-size: 1.3em;
+    }
+
+    .postGame h3 {
+        font-size: 1em;
+        margin-bottom: 2%;
     }
     
     .buttonContainer {
