@@ -6,7 +6,7 @@ import Player from "./gameLogic/player.js";
 import Header from "./htmlAssets/header.js";
 import AudioSetup from "./audio/audioSetup.js";
 import stormSound from './audio/sounds/storm.mp3'
-import wavesSound from './audio/sounds/waves.wav'
+import wavesSound from './audio/sounds/waves.mp3'
 
 // waves pregame music
 const menuMusic = new AudioSetup(wavesSound)
