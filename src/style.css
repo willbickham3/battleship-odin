@@ -260,15 +260,7 @@ button:hover {
         flex-direction: column;
         }
 
-    .player1 {
-        display: flex;
-    }
-    
-    .player2 {
-        display: flex;
-    }
-
-    .computer {
+    .player1, .player2, .computer {
         display: flex;
     }
 
