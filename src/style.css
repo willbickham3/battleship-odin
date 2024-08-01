@@ -263,6 +263,10 @@ button:hover {
     .player1 {
         display: flex;
     }
+    
+    .player2 {
+        display: flex;
+    }
 
     .computer {
         display: flex;
